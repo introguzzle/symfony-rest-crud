@@ -1,0 +1,309 @@
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+required
+min:6
+max:100
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException: Expired JWT Token in /var/www/html/vendor/lexik/jwt-authentication-bundle/Encoder/LcobucciJWTEncoder.php:57
+Stack trace:
+#0 /var/www/html/vendor/lexik/jwt-authentication-bundle/Services/JWTManager.php(122): Lexik\Bundle\JWTAuthenticationBundle\Encoder\LcobucciJWTEncoder->decode('eyJ0eXAiOiJKV1Q...')
+#1 /var/www/html/src/Request/Core/Request.php(82): Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager->parse('eyJ0eXAiOiJKV1Q...')
+#2 /var/www/html/src/Request/Core/Request.php(180): App\Request\Core\Request->getTokenPayload()
+#3 /var/www/html/src/EventListener/RequestListener.php(88): App\Request\Core\Request->guard()
+#4 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#5 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#6 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
+#7 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#8 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#9 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#10 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#11 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#12 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#13 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#14 {main}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+TypeError: App\Request\Core\Request::getTokenPayload(): Return value must be of type ?App\Other\Payload, array returned in /var/www/html/src/Request/Core/Request.php:85
+Stack trace:
+#0 /var/www/html/src/Request/Core/Request.php(183): App\Request\Core\Request->getTokenPayload()
+#1 /var/www/html/src/EventListener/RequestListener.php(88): App\Request\Core\Request->guard()
+#2 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#3 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#4 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
+#5 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#6 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#7 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#8 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#9 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#10 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#11 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#12 {main}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+PDOException: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "books_title_unique"
+DETAIL:  Key (title)=(TITLE13377) already exists. in /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Statement.php:130
+Stack trace:
+#0 /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Statement.php(130): PDOStatement->execute(NULL)
+#1 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Driver\PDO\Statement->execute(NULL)
+#2 /var/www/html/vendor/doctrine/dbal/src/Logging/Statement.php(98): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
+#3 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Logging\Statement->execute(NULL)
+#4 /var/www/html/vendor/symfony/doctrine-bridge/Middleware/Debug/DBAL3/Statement.php(70): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
+#5 /var/www/html/vendor/doctrine/dbal/src/Statement.php(190): Symfony\Bridge\Doctrine\Middleware\Debug\DBAL3\Statement->execute(NULL)
+#6 /var/www/html/vendor/doctrine/dbal/src/Statement.php(249): Doctrine\DBAL\Statement->execute(NULL)
+#7 /var/www/html/vendor/doctrine/orm/src/Persisters/Entity/BasicEntityPersister.php(249): Doctrine\DBAL\Statement->executeStatement()
+#8 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(1048): Doctrine\ORM\Persisters\Entity\BasicEntityPersister->executeInserts()
+#9 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(399): Doctrine\ORM\UnitOfWork->executeInserts()
+#10 /var/www/html/vendor/doctrine/orm/src/EntityManager.php(259): Doctrine\ORM\UnitOfWork->commit()
+#11 /var/www/html/src/Controller/BookController.php(96): Doctrine\ORM\EntityManager->flush()
+#12 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(181): App\Controller\BookController->create(Object(App\Request\CreateBookRequest))
+#13 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#14 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#15 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#16 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#17 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#18 {main}
+
+Next Doctrine\DBAL\Driver\PDO\Exception: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "books_title_unique"
+DETAIL:  Key (title)=(TITLE13377) already exists. in /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Exception.php:28
+Stack trace:
+#0 /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Statement.php(132): Doctrine\DBAL\Driver\PDO\Exception::new(Object(PDOException))
+#1 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Driver\PDO\Statement->execute(NULL)
+#2 /var/www/html/vendor/doctrine/dbal/src/Logging/Statement.php(98): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
+#3 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Logging\Statement->execute(NULL)
+#4 /var/www/html/vendor/symfony/doctrine-bridge/Middleware/Debug/DBAL3/Statement.php(70): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
+#5 /var/www/html/vendor/doctrine/dbal/src/Statement.php(190): Symfony\Bridge\Doctrine\Middleware\Debug\DBAL3\Statement->execute(NULL)
+#6 /var/www/html/vendor/doctrine/dbal/src/Statement.php(249): Doctrine\DBAL\Statement->execute(NULL)
+#7 /var/www/html/vendor/doctrine/orm/src/Persisters/Entity/BasicEntityPersister.php(249): Doctrine\DBAL\Statement->executeStatement()
+#8 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(1048): Doctrine\ORM\Persisters\Entity\BasicEntityPersister->executeInserts()
+#9 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(399): Doctrine\ORM\UnitOfWork->executeInserts()
+#10 /var/www/html/vendor/doctrine/orm/src/EntityManager.php(259): Doctrine\ORM\UnitOfWork->commit()
+#11 /var/www/html/src/Controller/BookController.php(96): Doctrine\ORM\EntityManager->flush()
+#12 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(181): App\Controller\BookController->create(Object(App\Request\CreateBookRequest))
+#13 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#14 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#15 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#16 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#17 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#18 {main}
+
+Next Doctrine\DBAL\Exception\UniqueConstraintViolationException: An exception occurred while executing a query: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "books_title_unique"
+DETAIL:  Key (title)=(TITLE13377) already exists. in /var/www/html/vendor/doctrine/dbal/src/Driver/API/PostgreSQL/ExceptionConverter.php:53
+Stack trace:
+#0 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1939): Doctrine\DBAL\Driver\API\PostgreSQL\ExceptionConverter->convert(Object(Doctrine\DBAL\Driver\PDO\Exception), Object(Doctrine\DBAL\Query))
+#1 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1881): Doctrine\DBAL\Connection->handleDriverException(Object(Doctrine\DBAL\Driver\PDO\Exception), Object(Doctrine\DBAL\Query))
+#2 /var/www/html/vendor/doctrine/dbal/src/Statement.php(194): Doctrine\DBAL\Connection->convertExceptionDuringQuery(Object(Doctrine\DBAL\Driver\PDO\Exception), 'INSERT INTO boo...', Array, Array)
+#3 /var/www/html/vendor/doctrine/dbal/src/Statement.php(249): Doctrine\DBAL\Statement->execute(NULL)
+#4 /var/www/html/vendor/doctrine/orm/src/Persisters/Entity/BasicEntityPersister.php(249): Doctrine\DBAL\Statement->executeStatement()
+#5 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(1048): Doctrine\ORM\Persisters\Entity\BasicEntityPersister->executeInserts()
+#6 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(399): Doctrine\ORM\UnitOfWork->executeInserts()
+#7 /var/www/html/vendor/doctrine/orm/src/EntityManager.php(259): Doctrine\ORM\UnitOfWork->commit()
+#8 /var/www/html/src/Controller/BookController.php(96): Doctrine\ORM\EntityManager->flush()
+#9 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(181): App\Controller\BookController->create(Object(App\Request\CreateBookRequest))
+#10 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#11 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#12 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#13 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#14 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#15 {main}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+PDOException: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "books_title_unique"
+DETAIL:  Key (title)=(TITLE13377) already exists. in /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Statement.php:130
+Stack trace:
+#0 /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Statement.php(130): PDOStatement->execute(NULL)
+#1 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Driver\PDO\Statement->execute(NULL)
+#2 /var/www/html/vendor/doctrine/dbal/src/Logging/Statement.php(98): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
+#3 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Logging\Statement->execute(NULL)
+#4 /var/www/html/vendor/symfony/doctrine-bridge/Middleware/Debug/DBAL3/Statement.php(70): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
+#5 /var/www/html/vendor/doctrine/dbal/src/Statement.php(190): Symfony\Bridge\Doctrine\Middleware\Debug\DBAL3\Statement->execute(NULL)
+#6 /var/www/html/vendor/doctrine/dbal/src/Statement.php(249): Doctrine\DBAL\Statement->execute(NULL)
+#7 /var/www/html/vendor/doctrine/orm/src/Persisters/Entity/BasicEntityPersister.php(249): Doctrine\DBAL\Statement->executeStatement()
+#8 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(1048): Doctrine\ORM\Persisters\Entity\BasicEntityPersister->executeInserts()
+#9 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(399): Doctrine\ORM\UnitOfWork->executeInserts()
+#10 /var/www/html/vendor/doctrine/orm/src/EntityManager.php(259): Doctrine\ORM\UnitOfWork->commit()
+#11 /var/www/html/src/Controller/BookController.php(96): Doctrine\ORM\EntityManager->flush()
+#12 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(181): App\Controller\BookController->create(Object(App\Request\CreateBookRequest))
+#13 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#14 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#15 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#16 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#17 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#18 {main}
+
+Next Doctrine\DBAL\Driver\PDO\Exception: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "books_title_unique"
+DETAIL:  Key (title)=(TITLE13377) already exists. in /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Exception.php:28
+Stack trace:
+#0 /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Statement.php(132): Doctrine\DBAL\Driver\PDO\Exception::new(Object(PDOException))
+#1 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Driver\PDO\Statement->execute(NULL)
+#2 /var/www/html/vendor/doctrine/dbal/src/Logging/Statement.php(98): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
+#3 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Logging\Statement->execute(NULL)
+#4 /var/www/html/vendor/symfony/doctrine-bridge/Middleware/Debug/DBAL3/Statement.php(70): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
+#5 /var/www/html/vendor/doctrine/dbal/src/Statement.php(190): Symfony\Bridge\Doctrine\Middleware\Debug\DBAL3\Statement->execute(NULL)
+#6 /var/www/html/vendor/doctrine/dbal/src/Statement.php(249): Doctrine\DBAL\Statement->execute(NULL)
+#7 /var/www/html/vendor/doctrine/orm/src/Persisters/Entity/BasicEntityPersister.php(249): Doctrine\DBAL\Statement->executeStatement()
+#8 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(1048): Doctrine\ORM\Persisters\Entity\BasicEntityPersister->executeInserts()
+#9 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(399): Doctrine\ORM\UnitOfWork->executeInserts()
+#10 /var/www/html/vendor/doctrine/orm/src/EntityManager.php(259): Doctrine\ORM\UnitOfWork->commit()
+#11 /var/www/html/src/Controller/BookController.php(96): Doctrine\ORM\EntityManager->flush()
+#12 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(181): App\Controller\BookController->create(Object(App\Request\CreateBookRequest))
+#13 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#14 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#15 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#16 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#17 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#18 {main}
+
+Next Doctrine\DBAL\Exception\UniqueConstraintViolationException: An exception occurred while executing a query: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "books_title_unique"
+DETAIL:  Key (title)=(TITLE13377) already exists. in /var/www/html/vendor/doctrine/dbal/src/Driver/API/PostgreSQL/ExceptionConverter.php:53
+Stack trace:
+#0 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1939): Doctrine\DBAL\Driver\API\PostgreSQL\ExceptionConverter->convert(Object(Doctrine\DBAL\Driver\PDO\Exception), Object(Doctrine\DBAL\Query))
+#1 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1881): Doctrine\DBAL\Connection->handleDriverException(Object(Doctrine\DBAL\Driver\PDO\Exception), Object(Doctrine\DBAL\Query))
+#2 /var/www/html/vendor/doctrine/dbal/src/Statement.php(194): Doctrine\DBAL\Connection->convertExceptionDuringQuery(Object(Doctrine\DBAL\Driver\PDO\Exception), 'INSERT INTO boo...', Array, Array)
+#3 /var/www/html/vendor/doctrine/dbal/src/Statement.php(249): Doctrine\DBAL\Statement->execute(NULL)
+#4 /var/www/html/vendor/doctrine/orm/src/Persisters/Entity/BasicEntityPersister.php(249): Doctrine\DBAL\Statement->executeStatement()
+#5 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(1048): Doctrine\ORM\Persisters\Entity\BasicEntityPersister->executeInserts()
+#6 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(399): Doctrine\ORM\UnitOfWork->executeInserts()
+#7 /var/www/html/vendor/doctrine/orm/src/EntityManager.php(259): Doctrine\ORM\UnitOfWork->commit()
+#8 /var/www/html/src/Controller/BookController.php(96): Doctrine\ORM\EntityManager->flush()
+#9 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(181): App\Controller\BookController->create(Object(App\Request\CreateBookRequest))
+#10 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#11 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#12 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#13 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#14 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#15 {main}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+TypeError: App\Other\Payload::fromArray(): Argument #1 ($payload) must be of type array, null given, called in /var/www/html/src/Request/Core/Request.php on line 85 and defined in /var/www/html/src/Other/Payload.php:39
+Stack trace:
+#0 /var/www/html/src/Request/Core/Request.php(85): App\Other\Payload::fromArray(NULL)
+#1 /var/www/html/src/Request/Core/Request.php(183): App\Request\Core\Request->getTokenPayload()
+#2 /var/www/html/src/EventListener/RequestListener.php(88): App\Request\Core\Request->guard()
+#3 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#4 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#5 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
+#6 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#7 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#8 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#9 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#10 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#11 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#12 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#13 {main}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+TypeError: App\Other\Payload::fromArray(): Argument #1 ($payload) must be of type array, null given, called in /var/www/html/src/Request/Core/Request.php on line 86 and defined in /var/www/html/src/Other/Payload.php:33
+Stack trace:
+#0 /var/www/html/src/Request/Core/Request.php(86): App\Other\Payload::fromArray(NULL)
+#1 /var/www/html/src/Request/Core/Request.php(185): App\Request\Core\Request->getTokenPayload()
+#2 /var/www/html/src/EventListener/RequestListener.php(88): App\Request\Core\Request->guard()
+#3 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#4 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#5 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
+#6 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#7 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#8 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#9 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#10 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#11 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#12 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#13 {main}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+App\Other\Constraint\UnknownConstraintException: Unknown constraint: emai in /var/www/html/src/Other/Constraint/ConstraintResolver.php:62
+Stack trace:
+#0 /var/www/html/src/Request/Core/Request.php(209): App\Other\Constraint\ConstraintResolver->resolve()
+#1 /var/www/html/src/Request/Core/Request.php(131): App\Request\Core\Request->resolveConstraint(Object(App\Other\Constraint\Group\InitialGroup))
+#2 /var/www/html/src/Request/Core/Request.php(175): App\Request\Core\Request->constrain()
+#3 /var/www/html/src/EventListener/RequestListener.php(89): App\Request\Core\Request->validate()
+#4 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#5 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#6 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
+#7 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#8 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#9 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#10 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#11 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#12 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#13 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#14 {main}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+PDOException: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "books_title_unique"
+DETAIL:  Key (title)=(TITLE13377) already exists. in /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Statement.php:130
+Stack trace:
+#0 /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Statement.php(130): PDOStatement->execute(NULL)
+#1 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Driver\PDO\Statement->execute(NULL)
+#2 /var/www/html/vendor/doctrine/dbal/src/Logging/Statement.php(98): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
+#3 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Logging\Statement->execute(NULL)
+#4 /var/www/html/vendor/symfony/doctrine-bridge/Middleware/Debug/DBAL3/Statement.php(70): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
+#5 /var/www/html/vendor/doctrine/dbal/src/Statement.php(190): Symfony\Bridge\Doctrine\Middleware\Debug\DBAL3\Statement->execute(NULL)
+#6 /var/www/html/vendor/doctrine/dbal/src/Statement.php(249): Doctrine\DBAL\Statement->execute(NULL)
+#7 /var/www/html/vendor/doctrine/orm/src/Persisters/Entity/BasicEntityPersister.php(249): Doctrine\DBAL\Statement->executeStatement()
+#8 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(1048): Doctrine\ORM\Persisters\Entity\BasicEntityPersister->executeInserts()
+#9 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(399): Doctrine\ORM\UnitOfWork->executeInserts()
+#10 /var/www/html/vendor/doctrine/orm/src/EntityManager.php(259): Doctrine\ORM\UnitOfWork->commit()
+#11 /var/www/html/src/Controller/BookController.php(96): Doctrine\ORM\EntityManager->flush()
+#12 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(181): App\Controller\BookController->create(Object(App\Request\CreateBookRequest))
+#13 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#14 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#15 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#16 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#17 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#18 {main}
+
+Next Doctrine\DBAL\Driver\PDO\Exception: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "books_title_unique"
+DETAIL:  Key (title)=(TITLE13377) already exists. in /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Exception.php:28
+Stack trace:
+#0 /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Statement.php(132): Doctrine\DBAL\Driver\PDO\Exception::new(Object(PDOException))
+#1 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Driver\PDO\Statement->execute(NULL)
+#2 /var/www/html/vendor/doctrine/dbal/src/Logging/Statement.php(98): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
+#3 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Logging\Statement->execute(NULL)
+#4 /var/www/html/vendor/symfony/doctrine-bridge/Middleware/Debug/DBAL3/Statement.php(70): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
+#5 /var/www/html/vendor/doctrine/dbal/src/Statement.php(190): Symfony\Bridge\Doctrine\Middleware\Debug\DBAL3\Statement->execute(NULL)
+#6 /var/www/html/vendor/doctrine/dbal/src/Statement.php(249): Doctrine\DBAL\Statement->execute(NULL)
+#7 /var/www/html/vendor/doctrine/orm/src/Persisters/Entity/BasicEntityPersister.php(249): Doctrine\DBAL\Statement->executeStatement()
+#8 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(1048): Doctrine\ORM\Persisters\Entity\BasicEntityPersister->executeInserts()
+#9 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(399): Doctrine\ORM\UnitOfWork->executeInserts()
+#10 /var/www/html/vendor/doctrine/orm/src/EntityManager.php(259): Doctrine\ORM\UnitOfWork->commit()
+#11 /var/www/html/src/Controller/BookController.php(96): Doctrine\ORM\EntityManager->flush()
+#12 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(181): App\Controller\BookController->create(Object(App\Request\CreateBookRequest))
+#13 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#14 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#15 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#16 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#17 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#18 {main}
+
+Next Doctrine\DBAL\Exception\UniqueConstraintViolationException: An exception occurred while executing a query: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "books_title_unique"
+DETAIL:  Key (title)=(TITLE13377) already exists. in /var/www/html/vendor/doctrine/dbal/src/Driver/API/PostgreSQL/ExceptionConverter.php:53
+Stack trace:
+#0 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1939): Doctrine\DBAL\Driver\API\PostgreSQL\ExceptionConverter->convert(Object(Doctrine\DBAL\Driver\PDO\Exception), Object(Doctrine\DBAL\Query))
+#1 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1881): Doctrine\DBAL\Connection->handleDriverException(Object(Doctrine\DBAL\Driver\PDO\Exception), Object(Doctrine\DBAL\Query))
+#2 /var/www/html/vendor/doctrine/dbal/src/Statement.php(194): Doctrine\DBAL\Connection->convertExceptionDuringQuery(Object(Doctrine\DBAL\Driver\PDO\Exception), 'INSERT INTO boo...', Array, Array)
+#3 /var/www/html/vendor/doctrine/dbal/src/Statement.php(249): Doctrine\DBAL\Statement->execute(NULL)
+#4 /var/www/html/vendor/doctrine/orm/src/Persisters/Entity/BasicEntityPersister.php(249): Doctrine\DBAL\Statement->executeStatement()
+#5 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(1048): Doctrine\ORM\Persisters\Entity\BasicEntityPersister->executeInserts()
+#6 /var/www/html/vendor/doctrine/orm/src/UnitOfWork.php(399): Doctrine\ORM\UnitOfWork->executeInserts()
+#7 /var/www/html/vendor/doctrine/orm/src/EntityManager.php(259): Doctrine\ORM\UnitOfWork->commit()
+#8 /var/www/html/src/Controller/BookController.php(96): Doctrine\ORM\EntityManager->flush()
+#9 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(181): App\Controller\BookController->create(Object(App\Request\CreateBookRequest))
+#10 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#11 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#12 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#13 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#14 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#15 {main}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}
+request: {"attributes":{},"request":{},"query":{},"server":{},"files":{},"cookies":{},"headers":{}}, tokenManager: {}, userRepository: {}, router: {}, em: {}

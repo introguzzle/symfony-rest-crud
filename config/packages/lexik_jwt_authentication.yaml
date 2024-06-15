@@ -1,0 +1,5 @@
+lexik_jwt_authentication:
+    secret_key: '%kernel.project_dir%/config/jwt/private.pem' # private key path
+    public_key: '%kernel.project_dir%/config/jwt/public.pem'  # public key path
+    pass_phrase: '1337'
+    token_ttl: 3600

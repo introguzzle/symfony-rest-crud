@@ -1,0 +1,17 @@
+/.env.local
+/.env.local.php
+/.env.*.local
+/.log.log
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+/postgres-data
+
+/phpunit.xml
+.phpunit.result.cache
+
+/public/assets/
+/assets/vendor/
+
+/config/jwt/*.pem
