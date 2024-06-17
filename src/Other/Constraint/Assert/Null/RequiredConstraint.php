@@ -10,11 +10,11 @@ class RequiredConstraint extends AbstractConstraint
     private string $message;
 
     public function __construct(
-        Request $request,
+        string  $definition,
         string  $message = 'This field cannot be null.'
     )
     {
-        parent::__construct($request);
+        parent::__construct($definition);
         $this->message = $message;
     }
 

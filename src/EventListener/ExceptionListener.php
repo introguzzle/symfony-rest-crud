@@ -3,7 +3,7 @@
 namespace App\EventListener;
 
 use App\Log\Log;
-use App\Other\RestResponse;
+use App\Response\RestResponse;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

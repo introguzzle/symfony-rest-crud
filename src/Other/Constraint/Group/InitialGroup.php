@@ -24,7 +24,7 @@ class InitialGroup extends AbstractGroup
 
     /**
      * @param string $then
-     * @return array|DefinitionGroup[]
+     * @return DefinitionGroup[]
      */
     public function split(string $then): array
     {

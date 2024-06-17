@@ -3,6 +3,7 @@
 namespace App\Other;
 
 use ReflectionClass;
+use Throwable;
 
 class Reflector
 {
@@ -13,7 +14,13 @@ class Reflector
 
         foreach ($properties as $property) {
             $name = $property->getName();
-            $value = $property->getValue($object);
+
+            try {
+                $value = $property->getValue($object);
+            } catch (Throwable) {
+                $value = null;
+            }
+
             $propertiesString .= "$name: " . json_encode($value) . ", ";
         }
 

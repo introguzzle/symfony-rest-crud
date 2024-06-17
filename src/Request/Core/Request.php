@@ -5,17 +5,19 @@ namespace App\Request\Core;
 use App\Entity\User;
 use App\Log\Log;
 use App\Other\Constraint\Assert\Core\Constraint;
-use App\Other\Constraint\ConstraintResolver;
 use App\Other\Constraint\Core\Group;
-use App\Other\Constraint\Errors;
-use App\Other\Constraint\Group\DefinitionGroup;
-use App\Other\Constraint\Group\InitialGroup;
+use App\Other\Constraint\Core\Resolver;
+use App\Other\Constraint\Core\Validator;
+use App\Other\Constraint\Group\MessageGroup;
+use App\Other\Constraint\Validation\RequestValidator;
+use App\Other\Constraint\Violation\Violations;
 use App\Other\Payload;
 use App\Other\Reflector;
-use App\Other\RestResponse;
 use App\Repository\UserRepository;
+use App\Response\RestResponse;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Stringable;
@@ -31,28 +33,35 @@ abstract class Request implements Stringable
 {
     protected SymfonyRequest $request;
     protected JWTTokenManagerInterface $tokenManager;
-    protected UserRepository $userRepository;
+    /**
+     * @var EntityRepository<User>|UserRepository
+     */
+    protected EntityRepository|UserRepository $userRepository;
     protected RouterInterface $router;
     protected EntityManagerInterface $em;
+    protected Resolver $resolver;
+    protected ?Validator $validator;
+    protected Violations $violations;
 
     private bool $useConstraints = true;
     private bool $validatePath = true;
     private bool $guard = true;
-
+    private bool $throw = true;
 
     public function __construct(
         RequestStack $requestStack,
         JWTTokenManagerInterface $tokenManager,
-        UserRepository $userRepository,
         RouterInterface $router,
         EntityManagerInterface $em,
+        Resolver $resolver,
     )
     {
         $this->request = $requestStack->getCurrentRequest();
         $this->tokenManager = $tokenManager;
-        $this->userRepository = $userRepository;
         $this->router = $router;
         $this->em = $em;
+        $this->userRepository = $this->em->getRepository(User::class);
+        $this->resolver = $resolver;
     }
 
     public function get(
@@ -60,7 +69,7 @@ abstract class Request implements Stringable
         mixed $default = null
     ): mixed
     {
-        return $this->request->getPayload()->get($key, $default);
+        return $this->request->get($key, $default) ?? $this->request->getPayload()->get($key, $default);
     }
 
     public function getRequest(): SymfonyRequest
@@ -108,77 +117,53 @@ abstract class Request implements Stringable
         return $this->request->query->all();
     }
 
+    public function queryBag(): InputBag
+    {
+        return $this->request->query;
+    }
+
+    public function headers(): array
+    {
+        return $this->request->headers->all();
+    }
+
+    public function headerBag(): HeaderBag
+    {
+        return $this->request->headers;
+    }
+
     /**
      * @return array<string, string|Constraint|Constraint[]>
      */
     abstract public function getValidationProperties(): array;
 
-    public function constrain(): Errors
+    /**
+     * @return array<string, string>
+     */
+    public function getMessages(): array
     {
-        $errors = new Errors();
+        return [];
+    }
 
-        foreach ($this->getValidationProperties() as $propertyName => $constraints) {
-            $propertyValue = $this->get($propertyName);
-
-            if ($constraints instanceof Constraint) {
-                $constraints->add($propertyValue, $errors, $propertyName);
-                continue;
-            }
-
-            if (is_string($constraints)) {
-                $group = new InitialGroup($constraints);
-
-                foreach ($group->split(':') as $constraint) {
-                    $result = $this->resolveConstraint($constraint)->add(
-                        $propertyValue,
-                        $errors,
-                        $propertyName
-                    );
-
-                    if (!$result) {
-                        // Break from inner loop
-                        goto in;
-                    }
-                }
-            }
-
-            if (is_array($constraints)) {
-                foreach ($constraints as $constraint) {
-                    if ($constraint instanceof Constraint) {
-                        $constraint->add($propertyValue, $errors, $propertyName);
-                    }
-
-                    if (is_string($constraint)) {
-                        $result = $this->resolveConstraint(new DefinitionGroup($constraint, ':'))->add(
-                            $propertyValue,
-                            $errors,
-                            $propertyName
-                        );
-
-                        if (!$result) {
-                            // Break from inner loop
-                            goto in;
-                        }
-                    }
-                }
-            }
-
-            // Imitate breaking from inner loops that appear before
-            in:
-        }
-
-        return $errors;
+    public function constrain(): Violations
+    {
+        return ($this->getValidator())->validate();
     }
 
     public function validate(): void
     {
-        if ($this->useConstraints) {
-            $errors = $this->constrain();
+        $this->prepare();
 
-            if ($errors->count() > 0) {
-                RestResponse::badRequest($errors)->throw();
+        if ($this->useConstraints) {
+            $this->violations = $this->constrain();
+            $this->setMessages();
+
+            if ($this->throw && $this->violations->hasAny()) {
+                RestResponse::badRequest($this->violations->toArray())->throw();
             }
         }
+
+        $this->after();
     }
 
     public function guard(): void
@@ -207,7 +192,17 @@ abstract class Request implements Stringable
 
     protected function resolveConstraint(Group $group): Constraint
     {
-        return (new ConstraintResolver($this, $group))->resolve();
+        return $this->resolver->resolve($group);
+    }
+
+    public function prepare(): void
+    {
+
+    }
+
+    public function after(): void
+    {
+
     }
 
     public function retrieveUser(): ?User
@@ -223,8 +218,7 @@ abstract class Request implements Stringable
             try {
                 $this->router->getMatcher()->match($this->getRequest()->getPathInfo());
             } catch (ResourceNotFoundException) {
-                RestResponse::notFound()->send();
-                exit;
+                RestResponse::notFound()->throw();
             }
         }
     }
@@ -254,7 +248,7 @@ abstract class Request implements Stringable
 
     public function getAuthorizationHeader(): ?string
     {
-        return $this->getHeaders()->get('Authorization');
+        return $this->headerBag()->get('Authorization');
     }
 
     public function getEntityManager(): EntityManagerInterface
@@ -267,11 +261,66 @@ abstract class Request implements Stringable
         return $this->tokenManager;
     }
 
-    /**
-     * @return HeaderBag
-     */
-    public function getHeaders(): HeaderBag
+    public function getValidator(): Validator
     {
-        return $this->request->headers;
+        if (!isset($this->validator)) {
+            $this->validator = new RequestValidator($this, $this->resolver);
+        }
+
+        return $this->validator;
+    }
+
+    public function setValidator(Validator $validator): static
+    {
+        $this->validator = $validator;
+        return $this;
+    }
+
+    public function setThrow(bool $throw): static
+    {
+        $this->throw = $throw;
+        return $this;
+    }
+
+    public function passedValidation(): bool
+    {
+        if (isset($this->violations)) {
+            return $this->violations->hasNone();
+        }
+
+        return true;
+    }
+
+    public function setMessages(array $messages = []): static
+    {
+        $set = function (array $messages): void {
+            foreach ($messages as $key => $message) {
+                $group = new MessageGroup($key);
+                [$name, $violated] = $group->divide();
+
+                $message = $this->formatMessage($name, $message);
+                $this->violations->set($name, $violated, $message);
+            }
+        };
+
+        $set($this->getMessages());
+        $set($messages);
+
+        return $this;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+
+    public function messageProperties(): array
+    {
+        return [];
+    }
+
+    protected function formatMessage(string $name, string $message): string
+    {
+        $property = $this->messageProperties()[$name] ?? $name;
+        return str_replace(':property', $property, $message);
     }
 }

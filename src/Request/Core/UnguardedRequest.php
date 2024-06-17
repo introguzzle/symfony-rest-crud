@@ -10,15 +10,8 @@ use Symfony\Component\Routing\RouterInterface;
 
 abstract class UnguardedRequest extends Request
 {
-    public function __construct(
-        RequestStack             $requestStack,
-        JWTTokenManagerInterface $tokenManager,
-        UserRepository           $userRepository,
-        RouterInterface          $router,
-        EntityManagerInterface   $em
-    )
+    public function guard(): void
     {
-        parent::__construct($requestStack, $tokenManager, $userRepository, $router, $em);
-        $this->setGuard(false);
+
     }
 }

@@ -4,12 +4,10 @@ namespace App\Controller;
 
 use App\Controller\Core\RestController;
 use App\Entity\User;
-use App\Other\RestResponse;
 use App\Repository\UserRepository;
-
-use App\Request\LoginRequest;
-use App\Request\RegisterRequest;
-
+use App\Request\Security\LoginRequest;
+use App\Request\Security\RegisterRequest;
+use App\Response\RestResponse;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,21 +15,22 @@ use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route(path: '/api')]
 class SecurityController extends RestController
 {
-    protected UserPasswordHasherInterface $passwordHasher;
+    private UserPasswordHasherInterface $passwordHasher;
+    private JWTTokenManagerInterface $tokenManager;
+    private UserRepository $userRepository;
 
     public function __construct(
-        JWTTokenManagerInterface $jwtManager,
-        UserRepository $userRepository,
-        ValidatorInterface $validator,
+        JWTTokenManagerInterface    $tokenManager,
+        UserRepository              $userRepository,
         UserPasswordHasherInterface $passwordHasher,
     )
     {
-        parent::__construct($jwtManager, $userRepository, $validator);
+        $this->tokenManager = $tokenManager;
+        $this->userRepository = $userRepository;
         $this->passwordHasher = $passwordHasher;
     }
 
@@ -54,7 +53,7 @@ class SecurityController extends RestController
             return $invalid();
         }
 
-        $token = $this->jwtManager->create($user);
+        $token = $this->tokenManager->create($user);
 
         return RestResponse::success(['token' => $token]);
     }
@@ -62,8 +61,8 @@ class SecurityController extends RestController
 
     #[Route(path: '/register', name: 'api_register', methods: ['POST'])]
     public function register(
-        RegisterRequest $request,
-        EntityManagerInterface $entityManager,
+        RegisterRequest        $request,
+        EntityManagerInterface $em,
     ): JsonResponse
     {
         $user = new User();
@@ -75,8 +74,8 @@ class SecurityController extends RestController
         $user->setCreatedAt(new DateTimeImmutable());
         $user->setUpdatedAt(new DateTime());
 
-        $entityManager->persist($user);
-        $entityManager->flush();
+        $em->persist($user);
+        $em->flush();
 
         return RestResponse::success($user);
     }

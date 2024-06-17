@@ -3,7 +3,6 @@
 namespace App\Other\Constraint\Assert;
 
 use App\Other\Constraint\Assert\Core\AbstractConstraint;
-use App\Request\Core\Request;
 use Closure;
 
 class RequestConstraint extends AbstractConstraint
@@ -12,24 +11,24 @@ class RequestConstraint extends AbstractConstraint
     private string $message;
 
     /**
-     * @param Request $request
-     * @param Closure(Request, mixed): bool $callback
+     * @param string $definition
+     * @param Closure(mixed): bool $callback
      * @param string $message
      */
     public function __construct(
-        Request $request,
+        string  $definition,
         Closure $callback,
-        string $message = 'Validation failed'
+        string  $message = 'Validation failed'
     )
     {
-        parent::__construct($request);
+        parent::__construct($definition);
         $this->callback = $callback;
         $this->message = $message;
     }
 
     public function test(mixed $value): bool
     {
-        return call_user_func($this->callback, $this->request, $value);
+        return call_user_func($this->callback, $value);
     }
 
     public function getMessage(): string

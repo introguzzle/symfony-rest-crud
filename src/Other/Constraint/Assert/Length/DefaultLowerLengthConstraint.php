@@ -7,11 +7,11 @@ use App\Request\Core\Request;
 class DefaultLowerLengthConstraint extends LowerLengthConstraint
 {
     public function __construct(
-        Request $request,
+        string  $definition,
         ?string $property = null,
-        string $message = 'This field must be at least {{ limit }} characters.'
+        string  $message = 'This field must be at least {{ limit }} characters.'
     )
     {
-        parent::__construct($request, 6, $property, $message);
+        parent::__construct($definition, 6, $property, $message);
     }
 }

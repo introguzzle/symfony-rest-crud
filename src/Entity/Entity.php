@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Other\Reflector;
+use Doctrine\Common\Collections\Collection;
 use JsonSerializable;
 use ReflectionClass;
 use ReflectionProperty;
@@ -26,6 +27,25 @@ abstract class Entity implements Stringable, JsonSerializable
         }
 
         return $array;
+    }
+
+    /**
+     * @param Entity[] $array
+     * @return array
+     */
+    public static function fromArray(array|Collection $array): array
+    {
+        $data = [];
+
+        if ($array instanceof Collection) {
+            $array = $array->toArray();
+        }
+
+        foreach ($array as $entity) {
+            $data[] = $entity->toArray();
+        }
+
+        return $data;
     }
 
     public function __toString(): string

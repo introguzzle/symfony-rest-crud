@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Request;
+namespace App\Request\Core;
 
 use App\Entity\User;
-use App\Request\Core\Request;
 
-class AuthorizedRequest extends Request
+abstract class AuthorizedRequest extends Request
 {
     public function retrieveUser(): User
     {

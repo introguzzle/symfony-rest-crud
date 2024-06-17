@@ -12,12 +12,12 @@ abstract class EntityConstraint extends AbstractConstraint
     protected string $table;
 
     public function __construct(
-        Request $request,
+        string $definition,
         EntityManagerInterface $em,
         string $table
     )
     {
-        parent::__construct($request);
+        parent::__construct($definition);
         $this->em = $em;
         $this->table = $table;
     }

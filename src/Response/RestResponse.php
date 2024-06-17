@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Other;
+namespace App\Response;
 
-use App\Other\Constraint\Errors;
+use App\Other\Constraint\Violation\Violations;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -85,8 +85,12 @@ class RestResponse extends JsonResponse
         return static::error('Expired', Response::HTTP_FORBIDDEN);
     }
 
-    public static function badRequest(Errors $errors): static
+    /**
+     * @param array<string, string> $violations
+     * @return static
+     */
+    public static function badRequest(array $violations): static
     {
-        return new static($errors->all(), Response::HTTP_BAD_REQUEST);
+        return new static($violations, Response::HTTP_BAD_REQUEST);
     }
 }

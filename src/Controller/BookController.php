@@ -4,24 +4,18 @@ namespace App\Controller;
 
 use App\Controller\Core\RestController;
 use App\Entity\Book;
-use App\Other\RestResponse;
 use App\Repository\BookRepository;
-use App\Repository\UserRepository;
-use App\Request\AuthorizedRequest;
-use App\Request\CreateBookRequest;
-
+use App\Request\Book\CreateRequest;
+use App\Request\Core\AuthorizedRequest;
+use App\Response\RestResponse;
 use DateTime;
 use DateTimeImmutable;
-
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityManagerInterface as EntityManager;
-
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/api/books')]
 class BookController extends RestController
@@ -30,14 +24,10 @@ class BookController extends RestController
     protected EntityManager $entityManager;
 
     public function __construct(
-        JWTTokenManagerInterface $jwtManager,
-        UserRepository $userRepository,
-        ValidatorInterface $validator,
         BookRepository $bookRepository,
         EntityManagerInterface $entityManager
     )
     {
-        parent::__construct($jwtManager, $userRepository, $validator);
         $this->bookRepository = $bookRepository;
         $this->entityManager = $entityManager;
     }
@@ -53,16 +43,16 @@ class BookController extends RestController
         $book = $this->bookRepository->find($id);
 
         if (!$book || $book->getUser()->getId() !== $user->getId()) {
-            return new JsonResponse(['error' => 'Book not found or you do not have access to it'], JsonResponse::HTTP_NOT_FOUND);
+            return RestResponse::notFound();
         }
 
         return RestResponse::success([
-            'id' => $book->getId(),
-            'title' => $book->getTitle(),
-            'author' => $book->getAuthor(),
+            'id'           => $book->getId(),
+            'title'        => $book->getTitle(),
+            'author'       => $book->getAuthor(),
             'published_at' => $book->getPublishedAt()?->format('Y-m-d H:i:s'),
-            'created_at' => $book->getCreatedAt()?->format('Y-m-d H:i:s'),
-            'updated_at' => $book->getUpdatedAt()?->format('Y-m-d H:i:s')
+            'created_at'   => $book->getCreatedAt()?->format('Y-m-d H:i:s'),
+            'updated_at'   => $book->getUpdatedAt()?->format('Y-m-d H:i:s')
         ]);
     }
 
@@ -71,17 +61,13 @@ class BookController extends RestController
         AuthorizedRequest $request
     ): JsonResponse
     {
-        $data = [];
-
-        foreach ($request->retrieveUser()->getBooks() as $book) {
-            $data[] = $book->toArray();
-        }
-
-        return RestResponse::success($data);
+        return RestResponse::success(Book::fromArray(
+            $request->retrieveUser()->getBooks()
+        ));
     }
 
     #[Route('/create', name: 'api_books_create', methods: ['POST'], stateless: true)]
-    public function create(CreateBookRequest $request): JsonResponse
+    public function create(CreateRequest $request): JsonResponse
     {
         $book = new Book();
 

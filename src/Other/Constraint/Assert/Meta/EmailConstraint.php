@@ -10,11 +10,11 @@ class EmailConstraint extends AbstractConstraint
     private string $message;
 
     public function __construct(
-        Request $request,
+        string $definition,
         string $message = 'Invalid email address.'
     )
     {
-        parent::__construct($request);
+        parent::__construct($definition);
         $this->message = $message;
     }
 

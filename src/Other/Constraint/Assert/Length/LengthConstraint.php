@@ -12,13 +12,13 @@ abstract class LengthConstraint extends AbstractConstraint
     protected string $message;
 
     public function __construct(
-        Request $request,
+        string  $definition,
         int     $value,
         ?string $property = null,
         string  $message = '',
     )
     {
-        parent::__construct($request);
+        parent::__construct($definition);
         $this->value = $value;
         $this->property = $property;
         $this->message = $message;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Request;
+namespace App\Request\Book;
 
-class CreateBookRequest extends AuthorizedRequest
+class CreateRequest extends Request
 {
 
     public function getValidationProperties(): array
@@ -11,5 +11,10 @@ class CreateBookRequest extends AuthorizedRequest
             'title'  => 'required, string, unique:books/title',
             'author' => 'required, string',
         ];
+    }
+
+    public function prepare(): void
+    {
+
     }
 }

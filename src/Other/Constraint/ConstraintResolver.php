@@ -2,46 +2,48 @@
 
 namespace App\Other\Constraint;
 
-
 use App\Other\Constraint\Assert\Core\Constraint;
 use App\Other\Constraint\Assert\Entity\EntityExistsConstraint;
 use App\Other\Constraint\Assert\Entity\EntityUniqueConstraint;
 use App\Other\Constraint\Assert\Length\LowerLengthConstraint;
 use App\Other\Constraint\Assert\Length\UpperLengthConstraint;
+use App\Other\Constraint\Assert\Match\EqualityConstraint;
+use App\Other\Constraint\Assert\Match\MatchConstraint;
+use App\Other\Constraint\Assert\Null\ConditionalRequiredConstraint;
 use App\Other\Constraint\Core\Group;
 use App\Other\Constraint\Core\Resolver;
-use App\Request\Core\Request;
+use App\Other\Constraint\Exception\UnknownConstraintException;
+use Doctrine\Inflector\Rules\Pattern;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class ConstraintResolver implements Resolver
 {
-    protected Request $request;
-    protected Group $group;
     protected EntityManagerInterface $em;
+    protected RequestStack $requestStack;
 
     /**
-     * @param Request $request
-     * @param Group $group
+     * @param RequestStack $requestStack
+     * @param EntityManagerInterface $em
      */
     public function __construct(
-        Request $request,
-        Group $group
+        RequestStack $requestStack,
+        EntityManagerInterface $em
     )
     {
-        $this->request = $request;
-        $this->group = $group;
-        $this->em = $request->getEntityManager();
+        $this->requestStack = $requestStack;
+        $this->em = $em;
     }
 
-    public function resolve(): Constraint
+    public function resolve(Group $group): Constraint
     {
-        if ($this->contains('exists:') || $this->contains('unique:')) {
-            [, $condition] = $this->group->split('/');
+        if (($exists = $group->contains('exists:')) || $group->contains('unique:')) {
+            [, $condition] = $group->split('/');
             [$table, $column] = $condition->divide();
 
-            if ($this->contains('exists:')) {
+            if ($exists) {
                 return new EntityExistsConstraint(
-                    $this->request,
+                    'exists',
                     $this->em,
                     $table,
                     $column
@@ -49,41 +51,65 @@ class ConstraintResolver implements Resolver
             }
 
             return new EntityUniqueConstraint(
-                $this->request,
+                'unique',
                 $this->em,
                 $table,
                 $column
             );
         }
 
-        if ($this->contains('min:')) {
-            [, $value] = $this->group->divide();
-            return new LowerLengthConstraint($this->request, (int) $value);
+        if ($group->contains('required_if:')) {
+            [, $other] = $group->divide();
+            return new ConditionalRequiredConstraint(
+                'required_if',
+                $this->get($other)
+            );
         }
 
-        if ($this->contains('max:')) {
-            [, $value] = $this->group->divide();
-            return new UpperLengthConstraint($this->request, (int) $value);
+        if ($group->contains('regex:')) {
+            [, $regex] = $group->divide();
+            return new MatchConstraint(
+                'regex',
+                new Pattern($regex)
+            );
         }
 
-        if ($this->exists()) {
-            return new ($this->group->retrieve())($this->request);
+        if ($group->contains('same:')) {
+            [, $other] = $group->divide();
+            return new EqualityConstraint(
+                'same',
+                $other,
+                $this->get($other)
+            );
         }
 
-        throw new UnknownConstraintException($this->group->getContent());
+        if ($group->contains('min:')) {
+            [, $value] = $group->divide();
+            return new LowerLengthConstraint(
+                'min',
+                (int) $value
+            );
+        }
+
+        if ($group->contains('max:')) {
+            [, $value] = $group->divide();
+            return new UpperLengthConstraint(
+                'max',
+                (int) $value
+            );
+        }
+
+        if ($group->exists()) {
+            return new ($group->retrieve())($group->getContent());
+        }
+
+        throw new UnknownConstraintException($group->getContent());
     }
 
-    /**
-     * @param string $needle
-     * @return bool
-     */
-    public function contains(string $needle): bool
+    public function get(string $other): mixed
     {
-        return $this->group->contains($needle);
-    }
+        $request = $this->requestStack->getCurrentRequest();
 
-    public function exists(): bool
-    {
-        return $this->group->exists();
+        return $request?->get($other) ?? $request?->getPayload()->get($other);
     }
 }

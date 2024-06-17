@@ -6,7 +6,13 @@ class EntityUniqueConstraint extends EntityExistsConstraint
 {
     public function test(mixed $value): bool
     {
-        return !parent::test($value);
+        $result = parent::test($value);
+
+        if ($this->failed) {
+            return false;
+        }
+
+        return !$result;
     }
 
     public function getMessage(): string

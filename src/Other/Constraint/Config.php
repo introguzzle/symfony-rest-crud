@@ -4,7 +4,7 @@ namespace App\Other\Constraint;
 
 use App\Other\Constraint\Assert\Core\NullConstraint;
 use App\Other\Constraint\Assert\Length\DefaultLowerLengthConstraint;
-use App\Other\Constraint\Assert\Length\LowerLengthConstraint;
+use App\Other\Constraint\Assert\Length\DefaultUpperLengthConstraint;
 use App\Other\Constraint\Assert\Meta\EmailConstraint;
 use App\Other\Constraint\Assert\Meta\PhoneConstraint;
 use App\Other\Constraint\Assert\Null\RequiredConstraint;
@@ -30,7 +30,7 @@ class Config
         'decimal'  => DecimalConstraint::class,
         'hidden'   => NullConstraint::class,
         'min'      => DefaultLowerLengthConstraint::class,
-        'max'      => LowerLengthConstraint::class,
+        'max'      => DefaultUpperLengthConstraint::class,
     ];
 
     private static self $instance;

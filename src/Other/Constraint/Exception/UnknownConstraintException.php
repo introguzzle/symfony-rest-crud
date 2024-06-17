@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Other\Constraint;
+namespace App\Other\Constraint\Exception;
 
 use RuntimeException;
 

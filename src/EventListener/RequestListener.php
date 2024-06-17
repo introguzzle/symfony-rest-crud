@@ -3,14 +3,16 @@
 namespace App\EventListener;
 
 use App\Log\Log;
-use App\Other\RestResponse;
-use App\Repository\UserRepository;
+use App\Other\Constraint\Core\Resolver;
 use App\Request\Core\Request;
+use App\Response\RestResponse;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use Psr\Log\LoggerInterface;
+
 use ReflectionClass;
+
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -22,27 +24,24 @@ use Symfony\Component\Routing\RouterInterface;
 final class RequestListener
 {
     private JWTTokenManagerInterface $tokenManager;
-    private UserRepository $userRepository;
     private RouterInterface $router;
     private RequestStack $requestStack;
-    private LoggerInterface $logger;
     private EntityManagerInterface $em;
+    private Resolver $resolver;
 
     public function __construct(
         RequestStack             $requestStack,
         JWTTokenManagerInterface $tokenManager,
-        UserRepository           $userRepository,
         RouterInterface          $router,
-        LoggerInterface          $logger,
-        EntityManagerInterface   $em
+        EntityManagerInterface   $em,
+        Resolver                 $resolver,
     )
     {
         $this->requestStack = $requestStack;
         $this->tokenManager = $tokenManager;
-        $this->userRepository = $userRepository;
         $this->router = $router;
-        $this->logger = $logger;
         $this->em = $em;
+        $this->resolver = $resolver;
     }
 
 
@@ -53,7 +52,6 @@ final class RequestListener
         $pathInfo = $request->getPathInfo();
 
         try {
-            // Получение информации о маршруте
             $parameters = $this->router->match($pathInfo);
             $controller = $parameters['_controller'];
 
@@ -78,12 +76,10 @@ final class RequestListener
                 $customRequest = new $requestClass(
                     $this->requestStack,
                     $this->tokenManager,
-                    $this->userRepository,
                     $this->router,
-                    $this->em
+                    $this->em,
+                    $this->resolver
                 );
-
-                Log::log($customRequest);
 
                 $customRequest->guard();
                 $customRequest->validate();
