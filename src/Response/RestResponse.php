@@ -2,7 +2,7 @@
 
 namespace App\Response;
 
-use App\Other\Constraint\Violation\Violations;
+use App\Other\Constraint\Violation\ViolationList;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;

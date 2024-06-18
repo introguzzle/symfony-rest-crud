@@ -2,6 +2,7 @@
 
 namespace App\Other\Constraint\Assert\Entity;
 
+use App\Log\Log;
 use App\Request\Core\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
@@ -38,8 +39,9 @@ class EntityExistsConstraint extends EntityConstraint
 
             $this->failed = false;
 
-            return ((int)$query->getSingleScalarResult()) > 0;
-        } catch (Throwable) {
+            return ((int) $query->getSingleScalarResult()) > 0;
+        } catch (Throwable $t) {
+            Log::log($t);
             $this->failed = true;
             return false;
         }

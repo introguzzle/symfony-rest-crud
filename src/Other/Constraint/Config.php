@@ -7,19 +7,23 @@ use App\Other\Constraint\Assert\Length\DefaultLowerLengthConstraint;
 use App\Other\Constraint\Assert\Length\DefaultUpperLengthConstraint;
 use App\Other\Constraint\Assert\Meta\EmailConstraint;
 use App\Other\Constraint\Assert\Meta\PhoneConstraint;
+use App\Other\Constraint\Assert\Null\NotBlankConstraint;
+use App\Other\Constraint\Assert\Null\NullableConstraint;
 use App\Other\Constraint\Assert\Null\RequiredConstraint;
 use App\Other\Constraint\Assert\Type\DecimalConstraint;
 use App\Other\Constraint\Assert\Type\IntegerConstraint;
 use App\Other\Constraint\Assert\Type\NumericConstraint;
 use App\Other\Constraint\Assert\Type\StringConstraint;
 
-class Config
+class Config implements Core\Config
 {
     /**
-     * @var array<string, class-string>|class-string[]
+     * @var array<string, class-string>
      */
     public array $map = [
         'required' => RequiredConstraint::class,
+        'nullable' => NullableConstraint::class,
+        'notblank' => NotBlankConstraint::class,
         'email'    => EmailConstraint::class,
         'phone'    => PhoneConstraint::class,
         'numeric'  => NumericConstraint::class,
@@ -43,5 +47,13 @@ class Config
     public static function getInstance(): static
     {
         return self::$instance ?? self::$instance = new static();
+    }
+
+    /**
+     * @return class-string[]
+     */
+    public function getRegisteredConstraints(): array
+    {
+        return $this->map;
     }
 }

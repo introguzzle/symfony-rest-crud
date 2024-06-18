@@ -5,14 +5,15 @@ namespace App\Request\Core;
 use App\Entity\User;
 use App\Log\Log;
 use App\Other\Constraint\Assert\Core\Constraint;
-use App\Other\Constraint\Core\Group;
 use App\Other\Constraint\Core\Resolver;
 use App\Other\Constraint\Core\Validator;
+use App\Other\Constraint\Core\ViolationList;
 use App\Other\Constraint\Group\MessageGroup;
+use App\Other\Constraint\Validation\CustomValidator;
 use App\Other\Constraint\Validation\RequestValidator;
-use App\Other\Constraint\Violation\Violations;
 use App\Other\Payload;
 use App\Other\Reflector;
+use App\Other\ValidationProperties;
 use App\Repository\UserRepository;
 use App\Response\RestResponse;
 use DateTime;
@@ -22,7 +23,6 @@ use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Stringable;
 use Symfony\Component\HttpFoundation\HeaderBag;
-use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -41,7 +41,7 @@ abstract class Request implements Stringable
     protected EntityManagerInterface $em;
     protected Resolver $resolver;
     protected ?Validator $validator;
-    protected Violations $violations;
+    protected ViolationList $violations;
 
     private bool $useConstraints = true;
     private bool $validatePath = true;
@@ -64,12 +64,40 @@ abstract class Request implements Stringable
         $this->resolver = $resolver;
     }
 
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function __get(string $key)
+    {
+        return $this->get($key);
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
+    public function __set(string $key, mixed $value)
+    {
+        $this->set($key, $value);
+    }
+
+    /**
+     * @param $name
+     * @return bool
+     */
+    public function __isset($name)
+    {
+        return $this->exists($name);
+    }
+
     public function get(
         string $key,
         mixed $default = null
     ): mixed
     {
-        return $this->request->get($key, $default) ?? $this->request->getPayload()->get($key, $default);
+        return $this->all()[$key] ?? $default;
     }
 
     public function getRequest(): SymfonyRequest
@@ -77,20 +105,25 @@ abstract class Request implements Stringable
         return $this->request;
     }
 
-    public function getBody(): InputBag
-    {
-        return $this->request->request;
-    }
-
     public function getMethod(): string
     {
         return $this->request->getMethod();
     }
 
+    /**
+     * @param string $token
+     * @return array
+     * @throws JWTDecodeFailureException
+     */
+    protected function parseToken(string $token): array
+    {
+        return $this->tokenManager->parse($token);
+    }
+
     public function getTokenPayload(): ?Payload
     {
         try {
-            return Payload::fromArray($this->tokenManager->parse($this->getToken()));
+            return Payload::fromArray($this->parseToken($this->getToken()));
         } catch (JWTDecodeFailureException $e) {
             return (($payload = $e->getPayload()) === null)
                 ? null
@@ -109,17 +142,11 @@ abstract class Request implements Stringable
 
     public function all(): array
     {
-        return $this->request->request->all();
-    }
+        $query = $this->request->query->all();
+        $request = $this->request->request->all();
+        $payload = $this->request->getPayload()->all();
 
-    public function query(): array
-    {
-        return $this->request->query->all();
-    }
-
-    public function queryBag(): InputBag
-    {
-        return $this->request->query;
+        return array_merge($query, $request, $payload);
     }
 
     public function headers(): array
@@ -133,9 +160,9 @@ abstract class Request implements Stringable
     }
 
     /**
-     * @return array<string, string|Constraint|Constraint[]>
+     * @return ValidationProperties
      */
-    abstract public function getValidationProperties(): array;
+    abstract public function getValidationProperties(): ValidationProperties;
 
     /**
      * @return array<string, string>
@@ -145,7 +172,7 @@ abstract class Request implements Stringable
         return [];
     }
 
-    public function constrain(): Violations
+    public function constrain(): ViolationList
     {
         return ($this->getValidator())->validate();
     }
@@ -166,11 +193,16 @@ abstract class Request implements Stringable
         $this->after();
     }
 
+    public function getMissingTokenMessage(): string
+    {
+        return 'Missing token';
+    }
+
     public function guard(): void
     {
         if ($this->guard) {
             if ($this->getAuthorizationHeader() === null) {
-                RestResponse::unauthorized('Missing token')->throw();
+                RestResponse::unauthorized($this->getMissingTokenMessage())->throw();
             }
 
             $payload = $this->getTokenPayload();
@@ -190,9 +222,27 @@ abstract class Request implements Stringable
         }
     }
 
-    protected function resolveConstraint(Group $group): Constraint
+    /**
+     * @param array<string, string|Constraint|Constraint[]> $definition
+     * @return Validator
+     */
+
+    public function createValidator(array $definition): Validator
     {
-        return $this->resolver->resolve($group);
+        return new CustomValidator($this, $this->resolver, $definition);
+    }
+
+    public function getValidatedData(): array
+    {
+        $this->validate();
+
+        foreach ($this->all() as $key => $value) {
+            if ($this->violations->has($key)) {
+                unset($this->all()[$key]);
+            }
+        }
+
+        return $this->all();
     }
 
     public function prepare(): void
@@ -285,7 +335,7 @@ abstract class Request implements Stringable
     public function passedValidation(): bool
     {
         if (isset($this->violations)) {
-            return $this->violations->hasNone();
+            return $this->violations->isEmpty();
         }
 
         return true;
@@ -318,9 +368,33 @@ abstract class Request implements Stringable
         return [];
     }
 
+    public function getPropertyAlias(): string
+    {
+        return ':property';
+    }
+
     protected function formatMessage(string $name, string $message): string
     {
         $property = $this->messageProperties()[$name] ?? $name;
-        return str_replace(':property', $property, $message);
+        return str_replace($this->getPropertyAlias(), $property, $message);
+    }
+
+    public function set(string $key, mixed $value): void
+    {
+        $request = $this->request->request;
+        $query   = $this->request->query;
+
+        if ($request->has($key)) {
+            $request->set($key, $value);
+        }
+
+        if ($query->has($key)) {
+            $query->set($key, $value);
+        }
+    }
+
+    public function exists($name): bool
+    {
+        return $this->get($name) !== null;
     }
 }

@@ -2,19 +2,25 @@
 
 namespace App\Request\Book;
 
+use App\Other\Options;
+use App\Other\ValidationProperties;
+
+/**
+ * @property string $title
+ * @property string $author
+ */
 class CreateRequest extends Request
 {
-
-    public function getValidationProperties(): array
+    public function getValidationProperties(): ValidationProperties
     {
-        return [
+        return new ValidationProperties([
             'title'  => 'required, string, unique:books/title',
             'author' => 'required, string',
-        ];
+        ]);
     }
 
-    public function prepare(): void
+    public function getEntityOptions(): Options
     {
-
+        return new Options();
     }
 }

@@ -2,8 +2,11 @@
 
 namespace App\Other\Constraint\Validation;
 
+use App\Log\Log;
 use App\Other\Constraint\Core\Resolver;
+use App\Other\Constraint\Core\ViolationList;
 use App\Other\Constraint\Violation\Violations;
+use App\Other\ValidationProperties;
 use App\Request\Core\Request;
 
 class RequestValidator extends AbstractValidator
@@ -29,7 +32,7 @@ class RequestValidator extends AbstractValidator
         $this->build($request->getValidationProperties());
     }
 
-    public function validate(): Violations
+    public function validate(): ViolationList
     {
         $this->violations ??= new Violations();
 
@@ -37,11 +40,7 @@ class RequestValidator extends AbstractValidator
             $this->violations->addAll($propertyValidator->validate());
         }
 
-        return $this->violations;
-    }
-
-    public function getViolations(): Violations
-    {
+        Log::print($this->violations);
         return $this->violations;
     }
 
@@ -60,9 +59,9 @@ class RequestValidator extends AbstractValidator
         return (bool) $result;
     }
 
-    protected function build(array $validationProperties): void
+    protected function build(ValidationProperties $validationProperties): void
     {
-        foreach ($validationProperties as $property => $constraints) {
+        foreach ($validationProperties->getProperties() as $property => $constraints) {
             $propertyValidator = new PropertyValidator(
                 $this->resolver,
                 $property,

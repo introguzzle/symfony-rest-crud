@@ -2,7 +2,7 @@
 
 namespace App\Other\Constraint\Violation;
 
-class Violation
+class Violation implements \App\Other\Constraint\Core\Violation
 {
     protected string $name;
     protected string $violated;
@@ -24,14 +24,21 @@ class Violation
         return $this->name;
     }
 
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+        return $this;
+    }
+
     public function getMessage(): string
     {
         return $this->message;
     }
 
-    public function setName(string $name): static
+
+    public function setMessage(string $message): static
     {
-        $this->name = $name;
+        $this->message = $message;
         return $this;
     }
 
@@ -43,12 +50,6 @@ class Violation
     public function setViolated(string $violated): static
     {
         $this->violated = $violated;
-        return $this;
-    }
-
-    public function setMessage(string $message): static
-    {
-        $this->message = $message;
         return $this;
     }
 }

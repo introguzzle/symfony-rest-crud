@@ -10,9 +10,4 @@ abstract class AuthorizedRequest extends Request
     {
         return parent::retrieveUser();
     }
-
-    public function getValidationProperties(): array
-    {
-        return [];
-    }
 }

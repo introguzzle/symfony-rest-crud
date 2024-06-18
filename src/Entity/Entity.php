@@ -39,6 +39,7 @@ abstract class Entity implements Stringable, JsonSerializable
 
         if ($array instanceof Collection) {
             $array = $array->toArray();
+
         }
 
         foreach ($array as $entity) {

@@ -2,8 +2,12 @@
 
 namespace App\Other\Constraint\Validation;
 
+use App\Log\Log;
 use App\Other\Constraint\Assert\Core\Constraint;
+use App\Other\Constraint\Assert\Null\NullableConstraint;
 use App\Other\Constraint\Core\Resolver;
+use App\Other\Constraint\Core\ViolationList;
+use App\Other\Constraint\Exception\InvalidFormatException;
 use App\Other\Constraint\Group\DefinitionGroup;
 use App\Other\Constraint\Group\InitialGroup;
 use App\Other\Constraint\Violation\Violation;
@@ -12,6 +16,8 @@ use InvalidArgumentException;
 
 class PropertyValidator extends AbstractValidator
 {
+    public const string NULLABLE_DEFINITION = 'nullable';
+
     protected Resolver $resolver;
     protected string $property;
     protected mixed $value;
@@ -35,17 +41,22 @@ class PropertyValidator extends AbstractValidator
         string|array $constraints
     )
     {
-        $this->resolver = $resolver;
-        $this->property = $property;
-        $this->value    = $value;
+        $this->resolver    = $resolver;
+        $this->property    = $property;
+        $this->value       = $value;
         $this->constraints = $this->resolve($constraints);
     }
 
-    public function validate(): Violations
+    public function validate(): ViolationList
     {
-        $this->violations ??= new Violations();
+        $this->violations = $this->getViolations();
 
         foreach ($this->constraints as $constraint) {
+            if ($constraint instanceof NullableConstraint && $this->value === null) {
+                $this->violations->clear();
+                break;
+            }
+
             if (!$constraint->test($this->value)) {
                 $violation = new Violation(
                     $this->property,
@@ -95,6 +106,10 @@ class PropertyValidator extends AbstractValidator
             return $result;
         }
 
-        throw new InvalidArgumentException('Invalid format');
+        if (is_string($constraints)) {
+            throw new InvalidFormatException($constraints);
+        }
+
+        throw new InvalidArgumentException();
     }
 }

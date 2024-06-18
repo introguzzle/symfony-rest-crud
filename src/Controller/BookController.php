@@ -5,8 +5,11 @@ namespace App\Controller;
 use App\Controller\Core\RestController;
 use App\Entity\Book;
 use App\Repository\BookRepository;
+use App\Request\Book\BookRequest;
 use App\Request\Book\CreateRequest;
-use App\Request\Core\AuthorizedRequest;
+use App\Request\Book\DeleteRequest;
+use App\Request\Book\PatchRequest;
+use App\Request\Book\PutRequest;
 use App\Response\RestResponse;
 use DateTime;
 use DateTimeImmutable;
@@ -21,7 +24,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class BookController extends RestController
 {
     protected BookRepository $bookRepository;
-    protected EntityManager $entityManager;
+    protected EntityManager $em;
 
     public function __construct(
         BookRepository $bookRepository,
@@ -29,14 +32,14 @@ class BookController extends RestController
     )
     {
         $this->bookRepository = $bookRepository;
-        $this->entityManager = $entityManager;
+        $this->em = $entityManager;
     }
 
 
     #[Route('/{id}', name: 'api_books_get', methods: ['GET'], stateless: true)]
     public function get(
         int $id,
-        AuthorizedRequest $request
+        BookRequest $request
     ): JsonResponse
     {
         $user = $request->retrieveUser();
@@ -56,9 +59,9 @@ class BookController extends RestController
         ]);
     }
 
-    #[Route('/', name: 'api_books_get_all', methods: ['GET'], stateless: true)]
+    #[Route('', name: 'api_books_get_all', methods: ['GET'], stateless: true)]
     public function getAll(
-        AuthorizedRequest $request
+        BookRequest $request
     ): JsonResponse
     {
         return RestResponse::success(Book::fromArray(
@@ -66,41 +69,65 @@ class BookController extends RestController
         ));
     }
 
-    #[Route('/create', name: 'api_books_create', methods: ['POST'], stateless: true)]
+    #[Route('', name: 'api_books_create', methods: ['POST'], stateless: true)]
     public function create(CreateRequest $request): JsonResponse
     {
         $book = new Book();
 
-        $book->setTitle($request->get('title'));
-        $book->setAuthor($request->get('author'));
+        $book->setTitle($request->title);
+        $book->setAuthor($request->author);
         $book->setPublishedAt(new DateTimeImmutable());
         $book->setCreatedAt(new DateTimeImmutable());
         $book->setUpdatedAt(new DateTime());
         $book->setUser($request->retrieveUser());
 
-        $this->entityManager->persist($book);
-        $this->entityManager->flush();
+        $this->em->persist($book);
+        $this->em->flush();
 
         return RestResponse::success($book);
     }
 
-    #[Route('/{id}/put', name: 'app_book_put', methods: ['PUT'], stateless: true)]
-    public function put(AuthorizedRequest $request): Response
+    #[Route('', name: 'app_book_put', methods: ['PUT'], stateless: true)]
+    public function put(PutRequest $request): Response
     {
-        return RestResponse::success();
+        $book = $request->getEntity();
 
+        $book->setTitle($request->title);
+        $book->setAuthor($request->author);
+
+        $this->em->persist($book);
+        $this->em->flush();
+
+        return RestResponse::success($book);
     }
 
-    #[Route('/{id}', name: 'app_book_patch', methods: ['PATCH'], stateless: true)]
-    public function patch(AuthorizedRequest $request, Book $book): Response
+    #[Route('', name: 'app_book_patch', methods: ['PATCH'], stateless: true)]
+    public function patch(PatchRequest $request): Response
     {
-        return RestResponse::success();
+        $book = $request->getEntity();
 
+        if ($request->title) {
+            $book->setTitle($request->title);
+        }
+
+        if ($request->author) {
+            $book->setAuthor($request->author);
+        }
+
+        $this->em->persist($book);
+        $this->em->flush();
+
+        return RestResponse::success($book);
     }
 
-    #[Route('/{id}', name: 'app_book_delete', methods: ['DELETE'], stateless: true)]
-    public function delete(AuthorizedRequest $request): Response
+    #[Route('', name: 'app_book_delete', methods: ['DELETE'], stateless: true)]
+    public function delete(DeleteRequest $request): Response
     {
+        $book = $request->getEntity();
+
+        $this->em->remove($book);
+        $this->em->flush();
+
         return RestResponse::success();
     }
 }

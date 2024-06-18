@@ -39,7 +39,6 @@ interface Group
     /**
      * Checks if the content of the group exists as a known constraint.
      *
-     * @throws UnknownConstraintException If the constraint is unknown.
      * @return bool True if the constraint exists, false otherwise.
      */
     public function exists(): bool;
@@ -48,6 +47,7 @@ interface Group
      * Retrieves the class name of the constraint associated with the content.
      *
      * @return class-string The class name of the constraint.
+     * @throws UnknownConstraintException
      */
     public function retrieve(): string;
 
