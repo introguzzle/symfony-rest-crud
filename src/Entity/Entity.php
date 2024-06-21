@@ -2,48 +2,55 @@
 
 namespace App\Entity;
 
+use App\Other\Converter;
 use App\Other\Reflector;
 use Doctrine\Common\Collections\Collection;
 use JsonSerializable;
 use ReflectionClass;
-use ReflectionProperty;
 use Stringable;
 
 abstract class Entity implements Stringable, JsonSerializable
 {
-    abstract public function hiddenProperties(): array;
-    public function toArray(): array
+    /**
+     * @var Converter<Entity, array>
+     */
+    public static Converter $converter;
+    /**
+     * @param Converter<Entity, array> $converter
+     * @return void
+     */
+    public static function setConverter(Converter $converter): void
     {
-        $array = [];
-        $reflection = new ReflectionClass($this);
-        $properties = $reflection->getProperties();
+        static::$converter = $converter;
+    }
 
-        foreach ($properties as $property) {
-            if (in_array($name = $property->getName(), $this->hiddenProperties(), true)) {
-                continue;
-            }
-
-            $array[$name] = $this->getPropertyValue($property);
+    public function convert(?Converter $converter = null): array
+    {
+        if ($converter !== null) {
+            return $converter->convert($this);
         }
 
-        return $array;
+        return static::$converter->convert($this);
     }
 
     /**
-     * @param Entity[] $array
+     * @param Entity[] $collection
+     * @param Converter|null $converter
      * @return array
      */
-    public static function fromArray(array|Collection $array): array
+    public static function convertCollection(
+        array|Collection $collection,
+        ?Converter       $converter = null
+    ): array
     {
         $data = [];
 
-        if ($array instanceof Collection) {
-            $array = $array->toArray();
-
+        if ($collection instanceof Collection) {
+            $collection = $collection->toArray();
         }
 
-        foreach ($array as $entity) {
-            $data[] = $entity->toArray();
+        foreach ($collection as $entity) {
+            $data[] = $entity->convert($converter);
         }
 
         return $data;
@@ -56,11 +63,13 @@ abstract class Entity implements Stringable, JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return $this->toArray();
+        return $this->convert();
     }
 
-    protected function getPropertyValue(ReflectionProperty $property)
+    abstract public function getHiddenProperties(): array;
+
+    public function getClass(): ReflectionClass
     {
-        return $property->getValue($this);
+        return new ReflectionClass($this);
     }
 }

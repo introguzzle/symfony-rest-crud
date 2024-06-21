@@ -7,42 +7,41 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: 'users')]
+#[Mapping\Entity(repositoryClass: UserRepository::class)]
+#[Mapping\Table(name: 'users')]
 class User extends Entity implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
-    #[ORM\Column(type: 'integer')]
+    #[Mapping\Id]
+    #[Mapping\GeneratedValue(strategy: 'SEQUENCE')]
+    #[Mapping\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
+    #[Mapping\Column(type: Types::STRING, length: 255, unique: true)]
     private string $name;
 
-    #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
+    #[Mapping\Column(type: Types::STRING, length: 255, unique: true)]
     private string $email;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Mapping\Column(type: Types::STRING, length: 255)]
     private string $password;
 
-    #[ORM\Column(type: Types::JSON)]
+    #[Mapping\Column(type: Types::JSON)]
     private array $roles;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[Mapping\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeInterface $createdAt;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Mapping\Column(type: Types::DATETIME_MUTABLE)]
     private DateTimeInterface $updatedAt;
 
     /**
      * @var Collection<int, Book>
      */
-    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
+    #[Mapping\OneToMany(targetEntity: Book::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     private Collection $books;
 
 
@@ -83,6 +82,12 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getEmail(): string
@@ -150,7 +155,7 @@ class User extends Entity implements UserInterface, PasswordAuthenticatedUserInt
         return $this->name;
     }
 
-    public function hiddenProperties(): array
+    public function getHiddenProperties(): array
     {
         return ['password'];
     }

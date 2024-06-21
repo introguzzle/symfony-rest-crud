@@ -1,367 +1,245 @@
-PDOException: SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "book" does not exist
-LINE 1: SELECT COUNT(id) AS count FROM book WHERE id = $1
-                                       ^ in /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Statement.php:130
+service_container
+App\Controller\BookController
+App\Controller\Controller
+App\Controller\SecurityController
+App\Other\Constraint\Core\Resolver
+Doctrine\Bundle\DoctrineBundle\Controller\ProfilerController
+Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+cache.app_clearer
+cache.global_clearer
+cache.system_clearer
+cache_warmer
+console.command_loader
+container.env_var_processors_locator
+container.get_routing_condition_service
+debug.error_handler_configurator
+error_controller
+lexik_jwt_authentication.encoder
+lexik_jwt_authentication.generate_token_command
+lexik_jwt_authentication.jwt_manager
+lexik_jwt_authentication.key_loader
+monolog.logger.deprecation
+routing.loader
+services_resetter
+web_profiler.controller.exception_panel
+web_profiler.controller.profiler
+web_profiler.controller.router
+.container.private.profiler
+.virtual_request_stack
+cache.app
+cache.security_is_granted_attribute_expression_language
+cache.system
+cache.validator_expression_language
+data_collector.cache
+data_collector.dump
+debug.stopwatch
+doctrine
+doctrine.dbal.default_connection
+doctrine.orm.default_entity_manager
+event_dispatcher
+http_kernel
+messenger.default_bus
+request_stack
+router
+translator
+var_dumper.cloner
+profiler
+App\Kernel
+database_connection
+doctrine.orm.entity_manager
+kernel
+Error: Cannot instantiate interface App\Other\Constraint\Core\Resolver in /var/www/html/var/cache/dev/ContainerUqkmxWP/getResolverService.php:23
 Stack trace:
-#0 /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Statement.php(130): PDOStatement->execute(NULL)
-#1 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Driver\PDO\Statement->execute(NULL)
-#2 /var/www/html/vendor/doctrine/dbal/src/Logging/Statement.php(98): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
-#3 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Logging\Statement->execute(NULL)
-#4 /var/www/html/vendor/symfony/doctrine-bridge/Middleware/Debug/DBAL3/Statement.php(70): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
-#5 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1099): Symfony\Bridge\Doctrine\Middleware\Debug\DBAL3\Statement->execute()
-#6 /var/www/html/vendor/doctrine/orm/src/NativeQuery.php(61): Doctrine\DBAL\Connection->executeQuery('SELECT COUNT(id...', Array, Array, NULL)
-#7 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(935): Doctrine\ORM\NativeQuery->_doExecute()
-#8 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(891): Doctrine\ORM\AbstractQuery->executeIgnoreQueryCache(NULL, 4)
-#9 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(773): Doctrine\ORM\AbstractQuery->execute(NULL, 4)
-#10 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(802): Doctrine\ORM\AbstractQuery->getSingleResult(4)
-#11 /var/www/html/src/Other/Constraint/Assert/Entity/EntityExistsConstraint.php(42): Doctrine\ORM\AbstractQuery->getSingleScalarResult()
-#12 /var/www/html/src/Other/Constraint/Validation/PropertyValidator.php(63): App\Other\Constraint\Assert\Entity\EntityExistsConstraint->test('11')
-#13 /var/www/html/src/Other/Constraint/Validation/RequestValidator.php(40): App\Other\Constraint\Validation\PropertyValidator->validate()
-#14 /var/www/html/src/Request/Core/Request.php(177): App\Other\Constraint\Validation\RequestValidator->validate()
-#15 /var/www/html/src/Request/Core/Request.php(185): App\Request\Core\Request->constrain()
-#16 /var/www/html/src/EventListener/RequestListener.php(85): App\Request\Core\Request->validate()
-#17 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#18 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#19 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
-#20 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#21 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#22 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
-#23 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
-#24 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
-#25 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
-#26 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
-#27 {main}
-
-Next Doctrine\DBAL\Driver\PDO\Exception: SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "book" does not exist
-LINE 1: SELECT COUNT(id) AS count FROM book WHERE id = $1
-                                       ^ in /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Exception.php:28
+#0 /var/www/html/var/cache/dev/ContainerUqkmxWP/App_KernelDevDebugContainer.php(503): ContainerUqkmxWP\getResolverService::do(Object(ContainerUqkmxWP\App_KernelDevDebugContainer), true)
+#1 /var/www/html/vendor/symfony/dependency-injection/Container.php(229): ContainerUqkmxWP\App_KernelDevDebugContainer->load('getResolverServ...')
+#2 /var/www/html/vendor/symfony/dependency-injection/Container.php(211): Symfony\Component\DependencyInjection\Container::make(Object(ContainerUqkmxWP\App_KernelDevDebugContainer), 'App\\Other\\Const...', 1)
+#3 /var/www/html/src/EventListener/RequestListener.php(55): Symfony\Component\DependencyInjection\Container->get('App\\Other\\Const...')
+#4 /var/www/html/var/cache/dev/ContainerUqkmxWP/App_KernelDevDebugContainer.php(793): App\EventListener\RequestListener->__construct(Object(App\Kernel))
+#5 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(235): ContainerUqkmxWP\App_KernelDevDebugContainer::ContainerUqkmxWP\{closure}()
+#6 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(70): Symfony\Component\EventDispatcher\EventDispatcher->sortListeners('kernel.request')
+#7 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(276): Symfony\Component\EventDispatcher\EventDispatcher->getListeners('kernel.request')
+#8 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(133): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->preProcess('kernel.request')
+#9 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#10 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#11 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#12 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#13 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#14 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#15 {main}
+Error: Cannot instantiate interface App\Other\Constraint\Core\Resolver in /var/www/html/var/cache/dev/ContainerTlzhJTx/App_KernelDevDebugContainer.php:1054
 Stack trace:
-#0 /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Statement.php(132): Doctrine\DBAL\Driver\PDO\Exception::new(Object(PDOException))
-#1 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Driver\PDO\Statement->execute(NULL)
-#2 /var/www/html/vendor/doctrine/dbal/src/Logging/Statement.php(98): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
-#3 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Logging\Statement->execute(NULL)
-#4 /var/www/html/vendor/symfony/doctrine-bridge/Middleware/Debug/DBAL3/Statement.php(70): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
-#5 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1099): Symfony\Bridge\Doctrine\Middleware\Debug\DBAL3\Statement->execute()
-#6 /var/www/html/vendor/doctrine/orm/src/NativeQuery.php(61): Doctrine\DBAL\Connection->executeQuery('SELECT COUNT(id...', Array, Array, NULL)
-#7 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(935): Doctrine\ORM\NativeQuery->_doExecute()
-#8 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(891): Doctrine\ORM\AbstractQuery->executeIgnoreQueryCache(NULL, 4)
-#9 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(773): Doctrine\ORM\AbstractQuery->execute(NULL, 4)
-#10 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(802): Doctrine\ORM\AbstractQuery->getSingleResult(4)
-#11 /var/www/html/src/Other/Constraint/Assert/Entity/EntityExistsConstraint.php(42): Doctrine\ORM\AbstractQuery->getSingleScalarResult()
-#12 /var/www/html/src/Other/Constraint/Validation/PropertyValidator.php(63): App\Other\Constraint\Assert\Entity\EntityExistsConstraint->test('11')
-#13 /var/www/html/src/Other/Constraint/Validation/RequestValidator.php(40): App\Other\Constraint\Validation\PropertyValidator->validate()
-#14 /var/www/html/src/Request/Core/Request.php(177): App\Other\Constraint\Validation\RequestValidator->validate()
-#15 /var/www/html/src/Request/Core/Request.php(185): App\Request\Core\Request->constrain()
-#16 /var/www/html/src/EventListener/RequestListener.php(85): App\Request\Core\Request->validate()
-#17 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#18 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#19 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
-#20 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#21 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#22 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
-#23 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
-#24 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
-#25 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
-#26 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
-#27 {main}
-
-Next Doctrine\DBAL\Exception\TableNotFoundException: An exception occurred while executing a query: SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "book" does not exist
-LINE 1: SELECT COUNT(id) AS count FROM book WHERE id = $1
-                                       ^ in /var/www/html/vendor/doctrine/dbal/src/Driver/API/PostgreSQL/ExceptionConverter.php:71
+#0 /var/www/html/var/cache/dev/ContainerTlzhJTx/App_KernelDevDebugContainer.php(804): ContainerTlzhJTx\App_KernelDevDebugContainer::getRequestListenerService(Object(ContainerTlzhJTx\App_KernelDevDebugContainer))
+#1 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(235): ContainerTlzhJTx\App_KernelDevDebugContainer::ContainerTlzhJTx\{closure}()
+#2 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(70): Symfony\Component\EventDispatcher\EventDispatcher->sortListeners('kernel.request')
+#3 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(276): Symfony\Component\EventDispatcher\EventDispatcher->getListeners('kernel.request')
+#4 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(133): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->preProcess('kernel.request')
+#5 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#6 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#7 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#8 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#9 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#10 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#11 {main}
+Error: Cannot instantiate interface App\Other\Constraint\Core\Resolver in /var/www/html/var/cache/dev/ContainerS1OB3t9/App_KernelDevDebugContainer.php:1114
 Stack trace:
-#0 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1939): Doctrine\DBAL\Driver\API\PostgreSQL\ExceptionConverter->convert(Object(Doctrine\DBAL\Driver\PDO\Exception), Object(Doctrine\DBAL\Query))
-#1 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1881): Doctrine\DBAL\Connection->handleDriverException(Object(Doctrine\DBAL\Driver\PDO\Exception), Object(Doctrine\DBAL\Query))
-#2 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1106): Doctrine\DBAL\Connection->convertExceptionDuringQuery(Object(Doctrine\DBAL\Driver\PDO\Exception), 'SELECT COUNT(id...', Array, Array)
-#3 /var/www/html/vendor/doctrine/orm/src/NativeQuery.php(61): Doctrine\DBAL\Connection->executeQuery('SELECT COUNT(id...', Array, Array, NULL)
-#4 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(935): Doctrine\ORM\NativeQuery->_doExecute()
-#5 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(891): Doctrine\ORM\AbstractQuery->executeIgnoreQueryCache(NULL, 4)
-#6 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(773): Doctrine\ORM\AbstractQuery->execute(NULL, 4)
-#7 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(802): Doctrine\ORM\AbstractQuery->getSingleResult(4)
-#8 /var/www/html/src/Other/Constraint/Assert/Entity/EntityExistsConstraint.php(42): Doctrine\ORM\AbstractQuery->getSingleScalarResult()
-#9 /var/www/html/src/Other/Constraint/Validation/PropertyValidator.php(63): App\Other\Constraint\Assert\Entity\EntityExistsConstraint->test('11')
-#10 /var/www/html/src/Other/Constraint/Validation/RequestValidator.php(40): App\Other\Constraint\Validation\PropertyValidator->validate()
-#11 /var/www/html/src/Request/Core/Request.php(177): App\Other\Constraint\Validation\RequestValidator->validate()
-#12 /var/www/html/src/Request/Core/Request.php(185): App\Request\Core\Request->constrain()
-#13 /var/www/html/src/EventListener/RequestListener.php(85): App\Request\Core\Request->validate()
-#14 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#15 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#16 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
-#17 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#18 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#19 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
-#20 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
-#21 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
-#22 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
-#23 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
-#24 {main}
-App\Other\Constraint\Violation\Violations Object
-(
-    [violations:protected] => Array
-        (
-            [0] => App\Other\Constraint\Violation\Violation Object
-                (
-                    [name:protected] => id
-                    [violated:protected] => exists
-                    [message:protected] => This field does not exist
-                )
-
-        )
-
-)
-
-App\Other\Constraint\Violation\Violations Object
-(
-    [violations:protected] => Array
-        (
-        )
-
-)
-
-TypeError: App\Entity\Book::setTitle(): Argument #1 ($title) must be of type string, null given, called in /var/www/html/src/Controller/BookController.php on line 109 and defined in /var/www/html/src/Entity/Book.php:50
+#0 /var/www/html/var/cache/dev/ContainerS1OB3t9/App_KernelDevDebugContainer.php(817): ContainerS1OB3t9\App_KernelDevDebugContainer::getRequestListenerService(Object(ContainerS1OB3t9\App_KernelDevDebugContainer))
+#1 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(235): ContainerS1OB3t9\App_KernelDevDebugContainer::ContainerS1OB3t9\{closure}()
+#2 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(70): Symfony\Component\EventDispatcher\EventDispatcher->sortListeners('kernel.request')
+#3 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(276): Symfony\Component\EventDispatcher\EventDispatcher->getListeners('kernel.request')
+#4 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(133): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->preProcess('kernel.request')
+#5 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#6 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#7 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#8 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#9 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#10 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#11 {main}
+ReflectionException: Class "App\Controller\SecurityController::login" does not exist in /var/www/html/src/EventListener/RequestListener.php:85
 Stack trace:
-#0 /var/www/html/src/Controller/BookController.php(109): App\Entity\Book->setTitle(NULL)
-#1 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(181): App\Controller\BookController->patch(Object(App\Request\Book\PatchRequest))
-#2 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
-#3 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
-#4 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
-#5 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
-#6 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
-#7 {main}
-App\Other\Constraint\Violation\Violations Object
-(
-    [violations:protected] => Array
-        (
-        )
-
-)
-
-App\Other\Constraint\Violation\Violations Object
-(
-    [violations:protected] => Array
-        (
-        )
-
-)
-
-App\Other\Constraint\Violation\Violations Object
-(
-    [violations:protected] => Array
-        (
-        )
-
-)
-
-PDOException: SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "book" does not exist
-LINE 1: SELECT COUNT(id) AS count FROM book WHERE id = $1
-                                       ^ in /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Statement.php:130
+#0 /var/www/html/src/EventListener/RequestListener.php(85): ReflectionClass->__construct('App\\Controller\\...')
+#1 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#2 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#3 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
+#4 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#5 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#6 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#7 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#8 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#9 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#10 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#11 {main}
+ErrorException: Warning: Undefined variable $container in /var/www/html/src/EventListener/RequestListener.php:49
 Stack trace:
-#0 /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Statement.php(130): PDOStatement->execute(NULL)
-#1 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Driver\PDO\Statement->execute(NULL)
-#2 /var/www/html/vendor/doctrine/dbal/src/Logging/Statement.php(98): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
-#3 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Logging\Statement->execute(NULL)
-#4 /var/www/html/vendor/symfony/doctrine-bridge/Middleware/Debug/DBAL3/Statement.php(70): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
-#5 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1099): Symfony\Bridge\Doctrine\Middleware\Debug\DBAL3\Statement->execute()
-#6 /var/www/html/vendor/doctrine/orm/src/NativeQuery.php(61): Doctrine\DBAL\Connection->executeQuery('SELECT COUNT(id...', Array, Array, NULL)
-#7 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(935): Doctrine\ORM\NativeQuery->_doExecute()
-#8 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(891): Doctrine\ORM\AbstractQuery->executeIgnoreQueryCache(NULL, 4)
-#9 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(773): Doctrine\ORM\AbstractQuery->execute(NULL, 4)
-#10 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(802): Doctrine\ORM\AbstractQuery->getSingleResult(4)
-#11 /var/www/html/src/Other/Constraint/Assert/Entity/EntityExistsConstraint.php(42): Doctrine\ORM\AbstractQuery->getSingleScalarResult()
-#12 /var/www/html/src/Other/Constraint/Validation/PropertyValidator.php(63): App\Other\Constraint\Assert\Entity\EntityExistsConstraint->test('11')
-#13 /var/www/html/src/Other/Constraint/Validation/RequestValidator.php(40): App\Other\Constraint\Validation\PropertyValidator->validate()
-#14 /var/www/html/src/Request/Core/Request.php(177): App\Other\Constraint\Validation\RequestValidator->validate()
-#15 /var/www/html/src/Request/Core/Request.php(185): App\Request\Core\Request->constrain()
-#16 /var/www/html/src/EventListener/RequestListener.php(85): App\Request\Core\Request->validate()
-#17 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#18 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#19 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
-#20 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#21 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#22 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
-#23 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
-#24 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
-#25 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
-#26 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
-#27 {main}
-
-Next Doctrine\DBAL\Driver\PDO\Exception: SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "book" does not exist
-LINE 1: SELECT COUNT(id) AS count FROM book WHERE id = $1
-                                       ^ in /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Exception.php:28
+#0 /var/www/html/var/cache/dev/ContainerBmWkeFT/App_KernelDevDebugContainer.php(1050): App\EventListener\RequestListener->__construct(Object(App\Kernel), Object(App\Other\Constraint\ConstraintResolver))
+#1 /var/www/html/var/cache/dev/ContainerBmWkeFT/App_KernelDevDebugContainer.php(794): ContainerBmWkeFT\App_KernelDevDebugContainer::getRequestListenerService(Object(ContainerBmWkeFT\App_KernelDevDebugContainer))
+#2 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(235): ContainerBmWkeFT\App_KernelDevDebugContainer::ContainerBmWkeFT\{closure}()
+#3 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(70): Symfony\Component\EventDispatcher\EventDispatcher->sortListeners('kernel.request')
+#4 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(276): Symfony\Component\EventDispatcher\EventDispatcher->getListeners('kernel.request')
+#5 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(133): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->preProcess('kernel.request')
+#6 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#7 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#8 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#9 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#10 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#11 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#12 {main}
+ReflectionException: Class "App\Controller\SecurityController::login" does not exist in /var/www/html/src/EventListener/RequestListener.php:85
 Stack trace:
-#0 /var/www/html/vendor/doctrine/dbal/src/Driver/PDO/Statement.php(132): Doctrine\DBAL\Driver\PDO\Exception::new(Object(PDOException))
-#1 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Driver\PDO\Statement->execute(NULL)
-#2 /var/www/html/vendor/doctrine/dbal/src/Logging/Statement.php(98): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
-#3 /var/www/html/vendor/doctrine/dbal/src/Driver/Middleware/AbstractStatementMiddleware.php(69): Doctrine\DBAL\Logging\Statement->execute(NULL)
-#4 /var/www/html/vendor/symfony/doctrine-bridge/Middleware/Debug/DBAL3/Statement.php(70): Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware->execute(NULL)
-#5 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1099): Symfony\Bridge\Doctrine\Middleware\Debug\DBAL3\Statement->execute()
-#6 /var/www/html/vendor/doctrine/orm/src/NativeQuery.php(61): Doctrine\DBAL\Connection->executeQuery('SELECT COUNT(id...', Array, Array, NULL)
-#7 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(935): Doctrine\ORM\NativeQuery->_doExecute()
-#8 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(891): Doctrine\ORM\AbstractQuery->executeIgnoreQueryCache(NULL, 4)
-#9 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(773): Doctrine\ORM\AbstractQuery->execute(NULL, 4)
-#10 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(802): Doctrine\ORM\AbstractQuery->getSingleResult(4)
-#11 /var/www/html/src/Other/Constraint/Assert/Entity/EntityExistsConstraint.php(42): Doctrine\ORM\AbstractQuery->getSingleScalarResult()
-#12 /var/www/html/src/Other/Constraint/Validation/PropertyValidator.php(63): App\Other\Constraint\Assert\Entity\EntityExistsConstraint->test('11')
-#13 /var/www/html/src/Other/Constraint/Validation/RequestValidator.php(40): App\Other\Constraint\Validation\PropertyValidator->validate()
-#14 /var/www/html/src/Request/Core/Request.php(177): App\Other\Constraint\Validation\RequestValidator->validate()
-#15 /var/www/html/src/Request/Core/Request.php(185): App\Request\Core\Request->constrain()
-#16 /var/www/html/src/EventListener/RequestListener.php(85): App\Request\Core\Request->validate()
-#17 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#18 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#19 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
-#20 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#21 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#22 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
-#23 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
-#24 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
-#25 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
-#26 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
-#27 {main}
-
-Next Doctrine\DBAL\Exception\TableNotFoundException: An exception occurred while executing a query: SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "book" does not exist
-LINE 1: SELECT COUNT(id) AS count FROM book WHERE id = $1
-                                       ^ in /var/www/html/vendor/doctrine/dbal/src/Driver/API/PostgreSQL/ExceptionConverter.php:71
+#0 /var/www/html/src/EventListener/RequestListener.php(85): ReflectionClass->__construct('App\\Controller\\...')
+#1 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#2 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#3 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
+#4 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#5 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#6 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#7 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#8 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#9 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#10 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#11 {main}
+ReflectionException: Class "App\Controller\SecurityController::login" does not exist in /var/www/html/src/EventListener/RequestListener.php:76
 Stack trace:
-#0 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1939): Doctrine\DBAL\Driver\API\PostgreSQL\ExceptionConverter->convert(Object(Doctrine\DBAL\Driver\PDO\Exception), Object(Doctrine\DBAL\Query))
-#1 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1881): Doctrine\DBAL\Connection->handleDriverException(Object(Doctrine\DBAL\Driver\PDO\Exception), Object(Doctrine\DBAL\Query))
-#2 /var/www/html/vendor/doctrine/dbal/src/Connection.php(1106): Doctrine\DBAL\Connection->convertExceptionDuringQuery(Object(Doctrine\DBAL\Driver\PDO\Exception), 'SELECT COUNT(id...', Array, Array)
-#3 /var/www/html/vendor/doctrine/orm/src/NativeQuery.php(61): Doctrine\DBAL\Connection->executeQuery('SELECT COUNT(id...', Array, Array, NULL)
-#4 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(935): Doctrine\ORM\NativeQuery->_doExecute()
-#5 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(891): Doctrine\ORM\AbstractQuery->executeIgnoreQueryCache(NULL, 4)
-#6 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(773): Doctrine\ORM\AbstractQuery->execute(NULL, 4)
-#7 /var/www/html/vendor/doctrine/orm/src/AbstractQuery.php(802): Doctrine\ORM\AbstractQuery->getSingleResult(4)
-#8 /var/www/html/src/Other/Constraint/Assert/Entity/EntityExistsConstraint.php(42): Doctrine\ORM\AbstractQuery->getSingleScalarResult()
-#9 /var/www/html/src/Other/Constraint/Validation/PropertyValidator.php(63): App\Other\Constraint\Assert\Entity\EntityExistsConstraint->test('11')
-#10 /var/www/html/src/Other/Constraint/Validation/RequestValidator.php(40): App\Other\Constraint\Validation\PropertyValidator->validate()
-#11 /var/www/html/src/Request/Core/Request.php(177): App\Other\Constraint\Validation\RequestValidator->validate()
-#12 /var/www/html/src/Request/Core/Request.php(185): App\Request\Core\Request->constrain()
-#13 /var/www/html/src/EventListener/RequestListener.php(85): App\Request\Core\Request->validate()
-#14 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#15 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#16 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
-#17 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#18 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#19 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
-#20 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
-#21 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
-#22 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
-#23 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
-#24 {main}
-App\Other\Constraint\Violation\Violations Object
-(
-    [violations:protected] => Array
-        (
-            [0] => App\Other\Constraint\Violation\Violation Object
-                (
-                    [name:protected] => id
-                    [violated:protected] => exists
-                    [message:protected] => This field does not exist
-                )
-
-        )
-
-)
-
-App\Other\Constraint\Violation\Violations Object
-(
-    [violations:protected] => Array
-        (
-        )
-
-)
-
-JsonException: Syntax error in /var/www/html/vendor/symfony/http-foundation/Request.php:1530
+#0 /var/www/html/src/EventListener/RequestListener.php(76): ReflectionClass->__construct('App\\Controller\\...')
+#1 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#2 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#3 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
+#4 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#5 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#6 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#7 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#8 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#9 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#10 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#11 {main}
+ReflectionException: Class "login" does not exist in /var/www/html/src/EventListener/RequestListener.php:76
 Stack trace:
-#0 /var/www/html/vendor/symfony/http-foundation/Request.php(1530): json_decode('{\n    "id": "11...', true, 512, 4194306)
-#1 /var/www/html/src/Request/Core/Request.php(147): Symfony\Component\HttpFoundation\Request->getPayload()
-#2 /var/www/html/src/Request/Core/Request.php(100): App\Request\Core\Request->all()
-#3 /var/www/html/src/Other/Constraint/Validation/RequestValidator.php(68): App\Request\Core\Request->get('id')
-#4 /var/www/html/src/Other/Constraint/Validation/RequestValidator.php(32): App\Other\Constraint\Validation\RequestValidator->build(Object(App\Other\ValidationProperties))
-#5 /var/www/html/src/Request/Core/Request.php(317): App\Other\Constraint\Validation\RequestValidator->__construct(Object(App\Request\Book\PutRequest), Object(App\Other\Constraint\ConstraintResolver))
-#6 /var/www/html/src/Request/Core/Request.php(177): App\Request\Core\Request->getValidator()
-#7 /var/www/html/src/Request/Core/Request.php(185): App\Request\Core\Request->constrain()
-#8 /var/www/html/src/EventListener/RequestListener.php(85): App\Request\Core\Request->validate()
-#9 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#10 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#11 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
-#12 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#13 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#14 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
-#15 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
-#16 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
-#17 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
-#18 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
-#19 {main}
-
-Next Symfony\Component\HttpFoundation\Exception\JsonException: Could not decode request body. in /var/www/html/vendor/symfony/http-foundation/Request.php:1532
+#0 /var/www/html/src/EventListener/RequestListener.php(76): ReflectionClass->__construct('login')
+#1 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#2 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#3 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
+#4 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#5 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#6 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#7 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#8 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#9 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#10 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#11 {main}
+Symfony\Component\DependencyInjection\Exception\RuntimeException: Cannot resolve argument $request of "App\Controller\SecurityController::login()": Cannot autowire service "App\Request\Security\LoginRequest": argument "$container" of method "App\Request\Core\Request::__construct()" references class "Symfony\Component\DependencyInjection\Container" but no such service exists. in /var/www/html/vendor/symfony/dependency-injection/Container.php:397
 Stack trace:
-#0 /var/www/html/src/Request/Core/Request.php(147): Symfony\Component\HttpFoundation\Request->getPayload()
-#1 /var/www/html/src/Request/Core/Request.php(100): App\Request\Core\Request->all()
-#2 /var/www/html/src/Other/Constraint/Validation/RequestValidator.php(68): App\Request\Core\Request->get('id')
-#3 /var/www/html/src/Other/Constraint/Validation/RequestValidator.php(32): App\Other\Constraint\Validation\RequestValidator->build(Object(App\Other\ValidationProperties))
-#4 /var/www/html/src/Request/Core/Request.php(317): App\Other\Constraint\Validation\RequestValidator->__construct(Object(App\Request\Book\PutRequest), Object(App\Other\Constraint\ConstraintResolver))
-#5 /var/www/html/src/Request/Core/Request.php(177): App\Request\Core\Request->getValidator()
-#6 /var/www/html/src/Request/Core/Request.php(185): App\Request\Core\Request->constrain()
-#7 /var/www/html/src/EventListener/RequestListener.php(85): App\Request\Core\Request->validate()
-#8 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#9 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
-#10 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
-#11 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#12 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
-#13 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
-#14 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
-#15 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
-#16 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
-#17 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
-#18 {main}
-App\Other\Constraint\Violation\Violations Object
-(
-    [violations:protected] => Array
-        (
-            [0] => App\Other\Constraint\Violation\Violation Object
-                (
-                    [name:protected] => author
-                    [violated:protected] => required
-                    [message:protected] => This field cannot be null.
-                )
-
-            [1] => App\Other\Constraint\Violation\Violation Object
-                (
-                    [name:protected] => author
-                    [violated:protected] => string
-                    [message:protected] => This field must be a string.
-                )
-
-        )
-
-)
-
-App\Other\Constraint\Violation\Violations Object
-(
-    [violations:protected] => Array
-        (
-        )
-
-)
-
-App\Other\Constraint\Violation\Violations Object
-(
-    [violations:protected] => Array
-        (
-            [0] => App\Other\Constraint\Violation\Violation Object
-                (
-                    [name:protected] => title
-                    [violated:protected] => notblank
-                    [message:protected] => This field cannot be blank.
-                )
-
-        )
-
-)
-
-App\Other\Constraint\Violation\Violations Object
-(
-    [violations:protected] => Array
-        (
-        )
-
-)
-
+#0 /var/www/html/vendor/symfony/dependency-injection/Argument/ServiceLocator.php(40): Symfony\Component\DependencyInjection\Container->getService('privates', 'App\\Request\\Sec...', NULL, 'Cannot autowire...')
+#1 /var/www/html/vendor/symfony/http-kernel/Controller/ArgumentResolver/ServiceValueResolver.php(84): Symfony\Component\DependencyInjection\Argument\ServiceLocator->get('request')
+#2 /var/www/html/vendor/symfony/http-kernel/Controller/ArgumentResolver/TraceableValueResolver.php(60): Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver->resolve(Object(Symfony\Component\HttpFoundation\Request), Object(Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata))
+#3 /var/www/html/vendor/symfony/http-kernel/Controller/ArgumentResolver.php(91): Symfony\Component\HttpKernel\Controller\ArgumentResolver\TraceableValueResolver->resolve(Object(Symfony\Component\HttpFoundation\Request), Object(Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata))
+#4 /var/www/html/vendor/symfony/http-kernel/Controller/TraceableArgumentResolver.php(40): Symfony\Component\HttpKernel\Controller\ArgumentResolver->getArguments(Object(Symfony\Component\HttpFoundation\Request), Array, Object(ReflectionMethod))
+#5 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(173): Symfony\Component\HttpKernel\Controller\TraceableArgumentResolver->getArguments(Object(Symfony\Component\HttpFoundation\Request), Array, Object(ReflectionMethod))
+#6 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#7 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#8 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#9 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#10 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#11 {main}
+TypeError: App\Request\Core\Request::__construct(): Argument #1 ($kernel) must be of type App\Kernel, ContainerReCjHDK\App_KernelDevDebugContainer given, called in /var/www/html/src/EventListener/RequestListener.php on line 61 and defined in /var/www/html/src/Request/Core/Request.php:54
+Stack trace:
+#0 /var/www/html/src/EventListener/RequestListener.php(61): App\Request\Core\Request->__construct(Object(ContainerReCjHDK\App_KernelDevDebugContainer), Object(App\Other\Constraint\ConstraintResolver))
+#1 /var/www/html/src/EventListener/RequestListener.php(85): App\EventListener\RequestListener->buildRequest('App\\Request\\Sec...')
+#2 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#3 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#4 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
+#5 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#6 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#7 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#8 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#9 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#10 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#11 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#12 {main}
+TypeError: App\Controller\SecurityController::__construct(): Argument #2 ($userRepository) must be of type App\Repository\UserRepository, Symfony\Bundle\FrameworkBundle\Routing\Router given, called in /var/www/html/src/EventListener/RequestListener.php on line 90 and defined in /var/www/html/src/Controller/SecurityController.php:26
+Stack trace:
+#0 /var/www/html/src/EventListener/RequestListener.php(90): App\Controller\SecurityController->__construct(Object(Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager), Object(Symfony\Bundle\FrameworkBundle\Routing\Router), Object(Symfony\Component\HttpFoundation\RequestStack), Object(ContainerQshxObf\EntityManagerGhostEbeb667), Object(App\Other\Constraint\ConstraintResolver), 'App\\Controller\\...', 'login')
+#1 /var/www/html/src/EventListener/RequestListener.php(77): App\EventListener\RequestListener->buildRequest()
+#2 /var/www/html/src/EventListener/RequestListener.php(104): App\EventListener\RequestListener->wire()
+#3 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#4 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#5 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
+#6 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#7 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#8 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#9 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#10 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#11 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#12 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#13 {main}
+TypeError: App\Request\Core\Request::__construct(): Argument #1 ($requestStack) must be of type Symfony\Component\HttpFoundation\RequestStack, Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager given, called in /var/www/html/src/EventListener/RequestListener.php on line 91 and defined in /var/www/html/src/Request/Core/Request.php:52
+Stack trace:
+#0 /var/www/html/src/EventListener/RequestListener.php(91): App\Request\Core\Request->__construct(Object(Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager), Object(Symfony\Bundle\FrameworkBundle\Routing\Router), Object(Symfony\Component\HttpFoundation\RequestStack), Object(ContainerQshxObf\EntityManagerGhostEbeb667), Object(App\Other\Constraint\ConstraintResolver), 'App\\Controller\\...', 'login', 'App\\Request\\Sec...')
+#1 /var/www/html/src/EventListener/RequestListener.php(78): App\EventListener\RequestListener->buildRequest()
+#2 /var/www/html/src/EventListener/RequestListener.php(105): App\EventListener\RequestListener->wire()
+#3 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#4 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#5 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
+#6 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#7 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#8 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#9 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#10 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#11 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#12 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#13 {main}
+TypeError: App\Request\Core\Request::__construct(): Argument #1 ($requestStack) must be of type Symfony\Component\HttpFoundation\RequestStack, Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager given, called in /var/www/html/src/EventListener/RequestListener.php on line 91 and defined in /var/www/html/src/Request/Core/Request.php:52
+Stack trace:
+#0 /var/www/html/src/EventListener/RequestListener.php(91): App\Request\Core\Request->__construct(Object(Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager), Object(Symfony\Bundle\FrameworkBundle\Routing\Router), Object(Symfony\Component\HttpFoundation\RequestStack), Object(ContainerL0oC9s0\EntityManagerGhostEbeb667), Object(App\Other\Constraint\ConstraintResolver), 'App\\Controller\\...', 'login', 'App\\Request\\Sec...')
+#1 /var/www/html/src/EventListener/RequestListener.php(78): App\EventListener\RequestListener->buildRequest()
+#2 /var/www/html/src/EventListener/RequestListener.php(105): App\EventListener\RequestListener->wire()
+#3 /var/www/html/vendor/symfony/event-dispatcher/Debug/WrappedListener.php(116): App\EventListener\RequestListener->onKernelRequest(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#4 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(220): Symfony\Component\EventDispatcher\Debug\WrappedListener->__invoke(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request', Object(Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher))
+#5 /var/www/html/vendor/symfony/event-dispatcher/EventDispatcher.php(56): Symfony\Component\EventDispatcher\EventDispatcher->callListeners(Array, 'kernel.request', Object(Symfony\Component\HttpKernel\Event\RequestEvent))
+#6 /var/www/html/vendor/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php(139): Symfony\Component\EventDispatcher\EventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#7 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(157): Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher->dispatch(Object(Symfony\Component\HttpKernel\Event\RequestEvent), 'kernel.request')
+#8 /var/www/html/vendor/symfony/http-kernel/HttpKernel.php(76): Symfony\Component\HttpKernel\HttpKernel->handleRaw(Object(Symfony\Component\HttpFoundation\Request), 1)
+#9 /var/www/html/vendor/symfony/http-kernel/Kernel.php(197): Symfony\Component\HttpKernel\HttpKernel->handle(Object(Symfony\Component\HttpFoundation\Request), 1, true)
+#10 /var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php(35): Symfony\Component\HttpKernel\Kernel->handle(Object(Symfony\Component\HttpFoundation\Request))
+#11 /var/www/html/vendor/autoload_runtime.php(29): Symfony\Component\Runtime\Runner\Symfony\HttpKernelRunner->run()
+#12 /var/www/html/public/index.php(5): require_once('/var/www/html/v...')
+#13 {main}

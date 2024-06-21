@@ -2,7 +2,6 @@
 
 namespace App\Request\Book;
 
-use App\Log\Log;
 use App\Other\FetchMode;
 use App\Other\Options;
 use App\Other\ValidationProperties;
@@ -18,8 +17,8 @@ class PatchRequest extends Request
     {
         return new ValidationProperties([
             'id'     => 'required, exists:books/id',
-            'title'  => 'nullable, string, notblank',
-            'author' => 'nullable, string, notblank',
+            'title'  => 'nullable, string, notBlank',
+            'author' => 'nullable, string, notBlank',
         ]);
     }
 

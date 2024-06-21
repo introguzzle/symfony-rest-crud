@@ -2,8 +2,10 @@
 
 namespace App\EventListener;
 
-use App\Log\Log;
+use App\Entity\Entity;
 use App\Other\Constraint\Core\Resolver;
+use App\Other\EntityConverter;
+use App\Other\Route;
 use App\Request\Core\Request;
 use App\Response\RestResponse;
 
@@ -14,6 +16,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use ReflectionClass;
 
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -23,11 +26,15 @@ use Symfony\Component\Routing\RouterInterface;
 
 final class RequestListener
 {
-    private JWTTokenManagerInterface $tokenManager;
-    private RouterInterface $router;
-    private RequestStack $requestStack;
-    private EntityManagerInterface $em;
-    private Resolver $resolver;
+    public RequestStack $requestStack;
+    public JWTTokenManagerInterface $tokenManager;
+    public RouterInterface $router;
+    public EntityManagerInterface $em;
+    public Resolver $resolver;
+
+    public string $controllerClass;
+    public string $controllerClassMethod;
+    public string $requestClass;
 
     public function __construct(
         RequestStack             $requestStack,
@@ -45,50 +52,59 @@ final class RequestListener
     }
 
 
+    public function boot(): void
+    {
+        Entity::setConverter(new EntityConverter());
+    }
+
+    public function match(SymfonyRequest $request): Route
+    {
+        $array = $this->router->match($request->getPathInfo());
+        return new Route($array['_route'], $array['_controller']);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function handle(): void
+    {
+        $reflection = new ReflectionClass($this->controllerClass);
+        $parameters = $reflection->getMethod($this->controllerClassMethod)->getParameters();
+
+        foreach ($parameters as $parameter) {
+            $parameterType = $parameter->getType();
+
+            if ($parameterType && is_subclass_of($this->requestClass = $parameterType->getName(), Request::class)) {
+                $request = $this->buildRequest();
+
+                $request->guard();
+                $request->validate();
+                $request->match();
+                break;
+            }
+        }
+    }
+
+
+    public function buildRequest(): Request
+    {
+        return new ($this->requestClass)(...$this->getProperties());
+    }
+
     #[AsEventListener(event: KernelEvents::REQUEST)]
     public function onKernelRequest(RequestEvent $event): void
     {
-        $request = $event->getRequest();
-        $pathInfo = $request->getPathInfo();
+        $this->boot();
 
         try {
-            $parameters = $this->router->match($pathInfo);
-            $controller = $parameters['_controller'];
+            $route = $this->match($event->getRequest());
 
-            [$controllerClass, $method] = explode('::', $controller);
+            $this->controllerClass = $route->getClass();
+            $this->controllerClassMethod = $route->getClassMethod();
 
-            $reflection = new ReflectionClass($controllerClass);
-            $methodReflection = $reflection->getMethod($method);
-            $parameters = $methodReflection->getParameters();
-
-            foreach ($parameters as $parameter) {
-                $parameterType = $parameter->getType();
-                if ($parameterType && is_subclass_of($parameterType->getName(), Request::class)) {
-                    $requestClass = $parameterType->getName();
-                    break;
-                }
-            }
-
-            if (isset($requestClass)) {
-                /**
-                 * @var Request $customRequest
-                 */
-                $customRequest = new $requestClass(
-                    $this->requestStack,
-                    $this->tokenManager,
-                    $this->router,
-                    $this->em,
-                    $this->resolver
-                );
-
-                $customRequest->guard();
-                $customRequest->validate();
-                $customRequest->match();
-            }
+            $this->handle();
 
         } catch (Exception $e) {
-            Log::log($e);
-
             if ($e instanceof NotFoundHttpException || $e instanceof ResourceNotFoundException) {
                 $event->setResponse(RestResponse::notFound());
                 return;
@@ -96,5 +112,19 @@ final class RequestListener
 
             $event->setResponse(RestResponse::internal($e));
         }
+    }
+
+    public function getProperties(): array
+    {
+        $reflection = new ReflectionClass($this);
+        $properties = $reflection->getProperties();
+
+        $arguments = [];
+
+        foreach ($properties as $property) {
+            $arguments[] = $property->getValue($this);
+        }
+
+        return $arguments;
     }
 }

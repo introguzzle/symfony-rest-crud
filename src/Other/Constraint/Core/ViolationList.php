@@ -8,7 +8,7 @@ interface ViolationList
 
     public function addAll(self $violations): static;
 
-    public function hasAny(): bool;
+    public function containsAny(): bool;
 
     public function isEmpty(): bool;
 
@@ -23,12 +23,12 @@ interface ViolationList
 
     public function all(): array;
 
-    public function set(string $name, string $violated, string $message): static;
+    public function set(Violation $violation): static;
 
     public function remove(string $name): static;
 
     public function clear(): static;
 
-    public function has(string $name): bool;
+    public function contains(string $name): bool;
     public function size(): int;
 }

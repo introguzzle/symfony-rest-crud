@@ -11,6 +11,7 @@ use App\Other\Constraint\Core\ViolationList;
 use App\Other\Constraint\Group\MessageGroup;
 use App\Other\Constraint\Validation\CustomValidator;
 use App\Other\Constraint\Validation\RequestValidator;
+use App\Other\Constraint\Violation\Violation;
 use App\Other\Payload;
 use App\Other\Reflector;
 use App\Other\ValidationProperties;
@@ -185,7 +186,7 @@ abstract class Request implements Stringable
             $this->violations = $this->constrain();
             $this->setMessages();
 
-            if ($this->throw && $this->violations->hasAny()) {
+            if ($this->throw && $this->violations->containsAny()) {
                 RestResponse::badRequest($this->violations->toArray())->throw();
             }
         }
@@ -237,7 +238,7 @@ abstract class Request implements Stringable
         $this->validate();
 
         foreach ($this->all() as $key => $value) {
-            if ($this->violations->has($key)) {
+            if ($this->violations->contains($key)) {
                 unset($this->all()[$key]);
             }
         }
@@ -349,7 +350,7 @@ abstract class Request implements Stringable
                 [$name, $violated] = $group->divide();
 
                 $message = $this->formatMessage($name, $message);
-                $this->violations->set($name, $violated, $message);
+                $this->violations->set(new Violation($name, $message, $violated));
             }
         };
 
@@ -373,10 +374,17 @@ abstract class Request implements Stringable
         return ':property';
     }
 
+    public function getValueAlias(): string
+    {
+        return ':value';
+    }
+
     protected function formatMessage(string $name, string $message): string
     {
         $property = $this->messageProperties()[$name] ?? $name;
-        return str_replace($this->getPropertyAlias(), $property, $message);
+        $p = str_replace($this->getPropertyAlias(), $property, $message);
+
+        return str_replace($this->getValueAlias(), $this->get($property), $p);
     }
 
     public function set(string $key, mixed $value): void

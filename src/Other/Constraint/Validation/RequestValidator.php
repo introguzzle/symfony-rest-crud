@@ -23,7 +23,7 @@ class RequestValidator extends AbstractValidator
      * @param Resolver $resolver
      */
     public function __construct(
-        Request $request,
+        Request  $request,
         Resolver $resolver
     )
     {
@@ -40,7 +40,6 @@ class RequestValidator extends AbstractValidator
             $this->violations->addAll($propertyValidator->validate());
         }
 
-        Log::print($this->violations);
         return $this->violations;
     }
 

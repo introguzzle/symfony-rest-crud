@@ -2,7 +2,7 @@
 
 namespace App\Response;
 
-use App\Other\Constraint\Violation\ViolationList;
+use JsonSerializable;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -15,13 +15,11 @@ class RestResponse extends JsonResponse
         array        $headers = []
     )
     {
-        if (is_object($data) && method_exists($data, 'toArray')) {
-            $data = $data->toArray();
+        if ($data instanceof JsonSerializable) {
+            $data = $data->jsonSerialize();
         }
 
         $data = ['status' => $status] + $data;
-
-
         parent::__construct($data, $status, $headers);
     }
 

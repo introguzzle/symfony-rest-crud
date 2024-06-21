@@ -27,7 +27,7 @@ class BookController extends RestController
     protected EntityManager $em;
 
     public function __construct(
-        BookRepository $bookRepository,
+        BookRepository         $bookRepository,
         EntityManagerInterface $entityManager
     )
     {
@@ -38,7 +38,7 @@ class BookController extends RestController
 
     #[Route('/{id}', name: 'api_books_get', methods: ['GET'], stateless: true)]
     public function get(
-        int $id,
+        int         $id,
         BookRequest $request
     ): JsonResponse
     {
@@ -64,7 +64,7 @@ class BookController extends RestController
         BookRequest $request
     ): JsonResponse
     {
-        return RestResponse::success(Book::fromArray(
+        return RestResponse::success(Book::convertCollection(
             $request->retrieveUser()->getBooks()
         ));
     }

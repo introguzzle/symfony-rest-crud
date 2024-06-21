@@ -45,13 +45,18 @@ abstract class Request extends AuthorizedRequest
             throw new UnsupportedMethodException();
         }
 
+        return $this->getEntityRepository()->findOneBy($this->buildCriteria());
+    }
+
+    protected function buildCriteria(): array
+    {
         $criteria = [];
 
-        foreach ($options->getProperties() as $property) {
+        foreach ($this->getEntityOptions()->getProperties() as $property) {
             $criteria = [$property => $this->get($property)];
         }
 
-        return $this->getEntityRepository()->findOneBy($criteria);
+        return $criteria;
     }
 
     public function getEntityCollection(): Collection
@@ -66,12 +71,6 @@ abstract class Request extends AuthorizedRequest
             throw new UnsupportedMethodException();
         }
 
-        $criteria = [];
-
-        foreach ($options->getProperties() as $property) {
-            $criteria = [$property => $this->get($property)];
-        }
-
-        return new ArrayCollection($this->getEntityRepository()->findBy($criteria));
+        return new ArrayCollection($this->getEntityRepository()->findBy($this->buildCriteria()));
     }
 }

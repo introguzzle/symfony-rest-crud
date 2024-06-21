@@ -6,11 +6,12 @@ use App\Other\ArrayList;
 use App\Other\Constraint\Core\Violation;
 use App\Other\Constraint\Core\ViolationList;
 use App\Other\Constraint\Exception\UnknownViolationException;
+use JsonSerializable;
 
 /**
  * @extends ArrayList<Violation>
  */
-class Violations extends ArrayList implements ViolationList
+class Violations extends ArrayList implements ViolationList, JsonSerializable
 {
     protected array $violations = [];
 
@@ -34,14 +35,14 @@ class Violations extends ArrayList implements ViolationList
         return $this;
     }
 
-    public function hasAny(): bool
+    public function containsAny(): bool
     {
         return $this->size() > 0;
     }
 
     public function isEmpty(): bool
     {
-        return !$this->hasAny();
+        return !$this->containsAny();
     }
 
     public function get(
@@ -51,7 +52,7 @@ class Violations extends ArrayList implements ViolationList
     {
         if ($violated === null) {
             foreach ($this->violations as $violation) {
-                if ($violation->getViolated() === $name) {
+                if ($violation->getName() === $name) {
                     return $violation;
                 }
             }
@@ -91,15 +92,15 @@ class Violations extends ArrayList implements ViolationList
         return $this->violations;
     }
 
-    public function set(string $name, string $violated, string $message): static
+    public function set(Violation $violation): static
     {
-        $violation = $this->get($name, $violated);
+        $subject = $this->get($violation->getName(), $violation->getViolated());
 
-        if ($violation === null) {
+        if ($subject === null) {
             throw new UnknownViolationException();
         }
 
-        $violation->setMessage($message);
+        $subject->setMessage($violation->getMessage());
         return $this;
     }
 
@@ -120,8 +121,13 @@ class Violations extends ArrayList implements ViolationList
         return $this;
     }
 
-    public function has(string $name): bool
+    public function contains(string $name): bool
     {
         return $this->first($name) !== null;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
     }
 }

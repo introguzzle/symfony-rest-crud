@@ -5,36 +5,36 @@ namespace App\Entity;
 use App\Repository\BookRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping;
 use DateTimeInterface;
 
-#[ORM\Table(name: 'books')]
-#[ORM\Entity(repositoryClass: BookRepository::class)]
+#[Mapping\Table(name: 'books')]
+#[Mapping\Entity(repositoryClass: BookRepository::class)]
 class Book extends Entity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[Mapping\Id]
+    #[Mapping\GeneratedValue(strategy: 'SEQUENCE')]
+    #[Mapping\Column(type: Types::INTEGER)]
     private int $id;
 
-    #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
+    #[Mapping\Column(type: Types::STRING, length: 255, unique: true)]
     private string $title;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Mapping\Column(type: Types::STRING, length: 255)]
     private string $author;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[Mapping\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $publishedAt;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[Mapping\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Mapping\Column(type: Types::DATETIME_MUTABLE)]
     private ?DateTimeInterface $updatedAt;
 
 
-    #[ORM\ManyToOne(targetEntity: User::class, cascade: ['all'], inversedBy: 'books')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'cascade')]
+    #[Mapping\ManyToOne(targetEntity: User::class, cascade: ['all'], inversedBy: 'books')]
+    #[Mapping\JoinColumn(nullable: false, onDelete: 'cascade')]
     private User $user;
 
     public function getId(): int
@@ -108,8 +108,8 @@ class Book extends Entity
         return $this;
     }
 
-    public function hiddenProperties(): array
+    public function getHiddenProperties(): array
     {
-        return ['password'];
+        return [];
     }
 }
